@@ -31,9 +31,10 @@ This is prototype only. What emulator to use and emulator's ip are hardcoded (bu
 2. Open emulator `Additional Tools` (`>>` button in top right toolbar of emulator)
 3. Locate `Emulator Adapter #1:` `Network addresses:` and copy `Preferred` IP address
 4. Open solution and navigate to `NewSessionExecutor.cs` file in `Winium.StoreApps.Driver` under `CommandExecutors`
-5. Replace value of `const string InnerIp` with IP adress you have copied
-6. Build solution
-7. Run tests (solution comes with `sample_test.py`)
+5. Replace value of `const string InnerIp` with IP adress you have copied (we could have put it in some app config, but it would be done automatically very soon anyways)
+6. If you have Visual Studio different from 2013 or in non standard path, then replace `PathToVsTestConsole` value with actual path to `vstest.console.exe`. Note: different versions of z`vs.test.console.exe` might require different command line options, we tested prototype only against VS 2013.
+7. Build solution
+8. Run tests (solution comes with `sample_test.py`)
 
 This is only a prototype. Deployment and ip address resolution will be made programmatically.
 We already support some basic commands:
