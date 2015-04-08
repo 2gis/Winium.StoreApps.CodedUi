@@ -1,0 +1,38 @@
+﻿<Page
+    x:Class="WiniumautomationExperimentApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WiniumautomationExperimentApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid x:Name="MagicId">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <TextBox x:Name="MagicBox" Grid.Row="1" Height="200"/>
+        <Button x:Name="MagicButton"
+                AutomationProperties.AutomationId="MagicId"
+                AutomationProperties.Name="MagicName"
+                Content="Hello!"
+                Grid.Row="2"
+                HorizontalAlignment="Center"
+                Click="MagicButton_Click"/>
+        <ToggleButton  Grid.Row="2"
+            AutomationProperties.AutomationId="MagicToggle" Content="ToggleMe" IsChecked="False"/>
+        <StackPanel Grid.Row="0"
+                    AutomationProperties.AutomationId="StackPanel">
+        <ListView  AutomationProperties.AutomationId="TopPanel">
+            <TextBox Text="Hello there!"/>
+        </ListView>
+        </StackPanel>
+    </Grid>
+</Page>
