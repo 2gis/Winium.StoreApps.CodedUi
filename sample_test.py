@@ -7,7 +7,8 @@ def sample():
     driver = webdriver.Remote(
         command_executor='http://localhost:9999',
         desired_capabilities={
-            'deviceName': 'iPhone 6',
+            'deviceName': 'ignored in prototype',
+            'app': 'ignored in prototype',
         })
 
     text_box = driver.find_element_by_tag_name("TextBox")
