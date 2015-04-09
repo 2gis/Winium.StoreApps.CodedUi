@@ -27,16 +27,13 @@ There are two parts: Winium.StoreApps.Driver and Winium.StoreApps.CodedUITestPro
 
 This is prototype only. What emulator to use and emulator's ip are hardcoded (but it can be done programmatically, see parent repository).
 
-1. You will need to launch emulator and deploy your app under test using Visual Studio or AppDeployer (solution comes with included `Winium.StoreApps.TestApp`)
-2. Open emulator `Additional Tools` (`>>` button in top right toolbar of emulator)
-3. Locate `Emulator Adapter #1:` `Network addresses:` and copy `Preferred` IP address
-4. Open solution and navigate to `NewSessionExecutor.cs` file in `Winium.StoreApps.Driver` under `CommandExecutors`
-5. Replace value of `const string InnerIp` with IP adress you have copied (we could have put it in some app config, but it would be done automatically very soon anyways)
-6. If you have Visual Studio different from 2013 or in non standard path, then replace `PathToVsTestConsole` value with actual path to `vstest.console.exe`. Note: different versions of z`vs.test.console.exe` might require different command line options, we tested prototype only against VS 2013.
-7. Build solution
-8. Run tests (solution comes with `sample_test.py`)
+1. Build solution
+2. Deploy `Winium.StoreApps.TestApp` to `Emulator 8.1 WVGA 4 inch 512MB`. You will need to launch emulator and deploy your app under test using Visual Studio or AppDeployer.
+3. If you have Visual Studio different from 2013 or in non standard path, then replace `VsTestConsolePath` value in App.config with actual path to `vstest.console.exe`. Note: different versions of `vs.test.console.exe` might require different command line options, we tested prototype only against VS 2013.
+4. Run `Winium.StoreApps.Driver`
+5. Run tests (solution comes with `sample_test.py`)
 
-This is only a prototype. Deployment and ip address resolution will be made programmatically.
+This is only a prototype. App deployment will be made programmatically in future versions.
 We already support some basic commands:
 - NewSession
 - FindElement
@@ -44,4 +41,3 @@ We already support some basic commands:
 - GetElementText
 - ClickElement
 - Close
-
