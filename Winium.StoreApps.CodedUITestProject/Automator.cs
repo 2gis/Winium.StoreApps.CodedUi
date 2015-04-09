@@ -83,6 +83,14 @@
             {
                 executor = new FindChildElementExecutor();
             }
+            else if (command.Name.Equals(DriverCommand.FindElements))
+            {
+                executor = new FindElementsExecutor();
+            }
+            else if (command.Name.Equals(DriverCommand.FindChildElements))
+            {
+                executor = new FindChildElementsExecutor();
+            }
             else if (command.Name.Equals(DriverCommand.GetElementText))
             {
                 executor = new GetElementTextExecutor();

@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="CommandExecutors\FindChildElementExecutor.cs" />
     <Compile Include="CommandExecutors\ClickElementExecutor.cs" />
+    <Compile Include="CommandExecutors\FindChildElementsExecutor.cs" />
+    <Compile Include="CommandExecutors\FindElementsExecutor.cs" />
     <Compile Include="CommandExecutors\GetElementTextExecutor.cs" />
     <Compile Include="CommandExecutors\CommandExecutorBase.cs" />
     <Compile Include="CommandExecutors\FindElementExecutor.cs" />

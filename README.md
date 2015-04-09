@@ -38,6 +38,8 @@ We already support some basic commands:
 - NewSession
 - FindElement
 - FindChildElement
+- FindElements
+- FindChildElements
 - GetElementText
 - ClickElement
 - Close

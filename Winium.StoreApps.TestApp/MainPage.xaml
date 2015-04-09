@@ -17,22 +17,33 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
-        <TextBox x:Name="MagicBox" Grid.Row="1" Height="200"/>
-        <Button x:Name="MagicButton"
+
+        <TextBox Margin="8"
+                 x:Name="MagicBox"
+                 Grid.Row="1"
+                 Height="200"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button
+                Margin="8"
                 AutomationProperties.AutomationId="MagicId"
                 AutomationProperties.Name="MagicName"
                 Content="Hello!"
-                Grid.Row="2"
-                HorizontalAlignment="Center"
                 Click="MagicButton_Click"/>
-        <ToggleButton  Grid.Row="2"
-            AutomationProperties.AutomationId="MagicToggle" Content="ToggleMe" IsChecked="False"/>
+            <Button Content="Button"
+                    Margin="8"/>
+            <ToggleButton
+                Margin="8"
+                AutomationProperties.AutomationId="MagicToggle" Content="ToggleMe" IsChecked="False"/>
+        </StackPanel>
+
         <StackPanel Grid.Row="0"
                     AutomationProperties.AutomationId="StackPanel">
-        <ListView  AutomationProperties.AutomationId="TopPanel">
-            <TextBox Text="Hello there!"/>
-        </ListView>
+            <ListView 
+            Margin="8"
+            AutomationProperties.AutomationId="TopPanel">
+                <TextBox Text="Hello there! I'm nested in list"/>
+                <Button>Button Nested In List</Button>
+            </ListView>
         </StackPanel>
     </Grid>
 </Page>
