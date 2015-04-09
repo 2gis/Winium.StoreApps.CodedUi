@@ -16,7 +16,6 @@
         [TestMethod]
         public void CodedUiTestMethod1()
         {
-            Automator.Instance.Map = new UIMap();
             Automator.Instance.Start();
             while (true)
             {

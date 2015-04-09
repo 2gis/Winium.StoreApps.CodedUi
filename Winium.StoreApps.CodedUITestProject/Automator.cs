@@ -44,8 +44,6 @@
 
         #region Public Properties
 
-        public UIMap Map { get; set; }
-
         public string Session { get; set; }
 
         #endregion
