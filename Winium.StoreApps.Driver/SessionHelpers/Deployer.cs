@@ -3,6 +3,10 @@
     #region
 
     using System.Diagnostics;
+    using System.Globalization;
+    using System.Linq;
+
+    using Microsoft.SmartDevice.MultiTargeting.Connectivity;
 
     #endregion
 
@@ -10,10 +14,8 @@
     {
         #region Constants
 
-        private const string CodedUiTestDllPath = @"..\..\..\Winium.StoreApps.CodedUITestProject\bin\Debug\CodedUITestProject1.dll";
-
-        private const string PathToVsTestConsole =
-            @"C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe";
+        private const string CodedUiTestDllPath =
+            @"..\..\..\Winium.StoreApps.CodedUITestProject\bin\Debug\CodedUITestProject1.dll";
 
         private const string SettingsPath = @"..\..\..\target.runsettings";
 
@@ -22,6 +24,26 @@
         #region Fields
 
         private Process codedUiTestProcess;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        public Deployer(string deviceName)
+        {
+            this.IpAddress = null;
+            this.DeviceName = deviceName;
+
+            this.Connect();
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        public string DeviceName { get; private set; }
+
+        public string IpAddress { get; private set; }
 
         #endregion
 
@@ -35,10 +57,12 @@
 
         public void DeployCodedUiTestServer()
         {
+            var pathToVsTestconsole = System.Configuration.ConfigurationManager.AppSettings["VsTestConsolePath"];
+
             // TODO We should generate run settings to specify device/emulator
             var codedUiTestLoopPsi = new ProcessStartInfo
                                          {
-                                             FileName = PathToVsTestConsole, 
+                                             FileName = pathToVsTestconsole, 
                                              Arguments =
                                                  string.Format(
                                                      "\"{0}\" /Settings:\"{1}\"", 
@@ -50,6 +74,29 @@
 
         public void Install()
         {
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void Connect()
+        {
+            var connectivity = new MultiTargetingConnectivity(CultureInfo.CurrentUICulture.LCID);
+
+            var connectableDevices = connectivity.GetConnectableDevices();
+
+            foreach (var device in from connectableDevice in connectableDevices
+                                   where connectableDevice.Name.Equals(this.DeviceName)
+                                   select connectableDevice.Connect())
+            {
+                string sourceIp;
+                string destinationIp;
+                int destinationPort;
+
+                device.GetEndPoints(0, out sourceIp, out destinationIp, out destinationPort);
+                this.IpAddress = destinationIp;
+            }
         }
 
         #endregion
