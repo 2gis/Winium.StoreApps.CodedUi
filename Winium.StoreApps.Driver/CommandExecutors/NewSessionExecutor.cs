@@ -23,7 +23,11 @@
             // TODO Add code to start emulator or device and deploy app
             // TODO Add deployment of CodedUI test project
             session.Deployer = new Deployer("Emulator 8.1 WVGA 4 inch 512MB");
-            session.Deployer.DeployCodedUiTestServer();
+            if (!session.ActualCapabilities.DebugCodedUi)
+            {
+                Logger.Info("Deploying CodedUI test server.");
+                session.Deployer.DeployCodedUiTestServer();
+            }
 
             session.CommandForwarder = new Requester(session.Deployer.IpAddress, session.ActualCapabilities.InnerPort);
 

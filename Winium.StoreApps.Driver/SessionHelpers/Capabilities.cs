@@ -17,6 +17,7 @@
             this.DeviceName = string.Empty;
             this.InnerPort = 9998;
             this.TakesScreenshot = true;
+            this.DebugCodedUi = false;
         }
 
         #endregion
@@ -43,6 +44,9 @@
 
         [JsonProperty("takesScreenshot")]
         public bool TakesScreenshot { get; set; }
+
+        [JsonProperty("debugCodedUI")]
+        public bool DebugCodedUi { get; set; }
 
         #endregion
 

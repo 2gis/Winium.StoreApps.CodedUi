@@ -6,7 +6,10 @@
 
         protected override string DoImpl()
         {
-            this.Session.Deployer.Close();
+            if (!this.Session.ActualCapabilities.DebugCodedUi)
+            {
+                this.Session.Deployer.Close();
+            }
 
             return this.JsonResponse();
         }
