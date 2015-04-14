@@ -8,6 +8,8 @@
 
     using Microsoft.SmartDevice.MultiTargeting.Connectivity;
 
+    using Winium.StoreApps.Common;
+
     #endregion
 
     public class Deployer
@@ -29,9 +31,9 @@
 
         #region Constructors and Destructors
 
-        public Deployer(string deviceName)
+        public Deployer(string deviceName, string ipAddress = null)
         {
-            this.IpAddress = null;
+            this.IpAddress = ipAddress;
             this.DeviceName = deviceName;
 
             this.Connect();
@@ -86,17 +88,25 @@
 
             var connectableDevices = connectivity.GetConnectableDevices();
 
-            foreach (var device in from connectableDevice in connectableDevices
-                                   where connectableDevice.Name.Equals(this.DeviceName)
-                                   select connectableDevice.Connect())
+            var matchingDevice = connectableDevices.FirstOrDefault(x => x.Name.Equals(this.DeviceName));
+
+            if (matchingDevice == null)
             {
+                throw new AutomationException("No devices or emulators found with name {}", this.DeviceName);
+            }
+
+            var device = matchingDevice.Connect();
+
+            if (this.IpAddress == null)
+            {
+                
                 string sourceIp;
                 string destinationIp;
                 int destinationPort;
-
-                device.GetEndPoints(0, out sourceIp, out destinationIp, out destinationPort);
+                device.GetEndPoints(9998, out sourceIp, out destinationIp, out destinationPort);
                 this.IpAddress = destinationIp;
             }
+
         }
 
         #endregion

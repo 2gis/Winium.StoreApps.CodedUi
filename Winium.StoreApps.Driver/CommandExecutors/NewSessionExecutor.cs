@@ -21,8 +21,10 @@
             session.ActualCapabilities = Capabilities.CapabilitiesFromJsonString(serializedCapability);
 
             // TODO Add code to start emulator or device and deploy app
-            // TODO Add deployment of CodedUI test project
-            session.Deployer = new Deployer("Emulator 8.1 WVGA 4 inch 512MB");
+            session.Deployer = new Deployer(
+                session.ActualCapabilities.DeviceName, 
+                session.ActualCapabilities.DeviceIpAddress);
+
             if (!session.ActualCapabilities.DebugCodedUi)
             {
                 Logger.Info("Deploying CodedUI test server.");

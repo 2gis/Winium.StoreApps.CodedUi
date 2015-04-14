@@ -39,6 +39,9 @@
         [JsonProperty("deviceName")]
         public string DeviceName { get; set; }
 
+        [JsonProperty("deviceIpAddress")]
+        public string DeviceIpAddress { get; set; }
+
         [JsonProperty("innerPort")]
         public int InnerPort { get; set; }
 
