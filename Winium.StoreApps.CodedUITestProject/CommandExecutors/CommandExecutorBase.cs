@@ -1,5 +1,7 @@
-﻿namespace CodedUITestProject1
+﻿namespace CodedUITestProject1.CommandExecutors
 {
+    #region
+
     using System;
     using System.Net;
 
@@ -7,13 +9,21 @@
 
     using Winium.StoreApps.Common;
 
+    #endregion
+
     public class CommandExecutorBase
     {
-        public Command ExecutedCommand { get; set; }
-        
+        #region Public Properties
+
         public ElementsRegistry ElementsRegistry { get; set; }
 
+        public Command ExecutedCommand { get; set; }
+
         public string Session { get; set; }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         public CommandResponse Do()
         {
@@ -21,10 +31,14 @@
             {
                 return CommandResponse.Create(HttpStatusCode.OK, this.DoImpl());
             }
+            catch (AutomationException exception)
+            {
+                return CommandResponse.Create(HttpStatusCode.OK, this.JsonResponse(exception.Status, exception.Message));
+            }
             catch (NotImplementedException exception)
             {
                 return CommandResponse.Create(
-                    HttpStatusCode.NotImplemented,
+                    HttpStatusCode.NotImplemented, 
                     this.JsonResponse(ResponseStatus.UnknownCommand, exception.Message));
             }
             catch (Exception exception)
@@ -32,6 +46,10 @@
                 return CommandResponse.Create(HttpStatusCode.BadRequest, exception.ToString());
             }
         }
+
+        #endregion
+
+        #region Methods
 
         protected virtual string DoImpl()
         {
@@ -48,5 +66,6 @@
             return JsonConvert.SerializeObject(new JsonResponse(this.Session, status, value));
         }
 
+        #endregion
     }
 }

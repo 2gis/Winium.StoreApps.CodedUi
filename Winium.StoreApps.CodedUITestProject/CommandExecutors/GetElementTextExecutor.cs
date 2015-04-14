@@ -35,7 +35,7 @@
                 return textPattern.DocumentRange.GetText(-1);
             }
 
-            return null;
+            return element.Current.Name;
         }
     }
 }

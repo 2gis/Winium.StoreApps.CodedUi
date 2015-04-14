@@ -99,10 +99,19 @@
             {
                 executor = new ClickElementExecutor();
             }
+            else if (command.Name.Equals(DriverCommand.SendKeysToElement))
+            {
+                executor = new SendKeysToElementExecutor();
+            }
+            else if (command.Name.Equals(DriverCommand.GetElementAttribute))
+            {
+                executor = new GetElementAttributeExecutor();
+            }
             else if (command.Name.Equals("getSupportedAutomation"))
             {
                 executor = new GetSupportedAutomationExecutor();
             }
+            
 
             if (executor != null)
             {

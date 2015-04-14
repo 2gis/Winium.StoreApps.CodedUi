@@ -45,17 +45,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CommandExecutors\SendKeysToElementExecutor.cs" />
     <Compile Include="CommandExecutors\FindChildElementExecutor.cs" />
     <Compile Include="CommandExecutors\ClickElementExecutor.cs" />
     <Compile Include="CommandExecutors\FindChildElementsExecutor.cs" />
     <Compile Include="CommandExecutors\FindElementsExecutor.cs" />
+    <Compile Include="CommandExecutors\GetElementAttributeExecutor.cs" />
     <Compile Include="CommandExecutors\GetElementTextExecutor.cs" />
     <Compile Include="CommandExecutors\CommandExecutorBase.cs" />
     <Compile Include="CommandExecutors\FindElementExecutor.cs" />
     <Compile Include="CommandExecutors\GetPageSourceExecutor.cs" />
     <Compile Include="CommandExecutors\GetSupportedAutomationExecutor.cs" />
     <Compile Include="CommandExecutors\Helpers\By.cs" />
-    <Compile Include="CommandExecutors\TestExecutor.cs" />
     <Compile Include="ElementsRegistry.cs" />
     <Compile Include="SocketServer.cs" />
     <Compile Include="AcceptedRequest.cs" />
