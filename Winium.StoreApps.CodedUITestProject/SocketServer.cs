@@ -5,42 +5,30 @@
     using System;
     using System.Globalization;
     using System.Net;
-    using System.Text;
     using System.Threading.Tasks;
-    using System.Windows.Automation;
 
     using Windows.Networking.Sockets;
     using Windows.Storage.Streams;
-    using Windows.UI.Xaml;
-
-    using Microsoft.VisualStudio.TestTools.UITesting;
 
     using Winium.StoreApps.Common;
-
-    using UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding;
 
     #endregion
 
     public class SocketServer
     {
-        #region Static Fields
-
-        #endregion
-
         #region Fields
 
+        private readonly Func<string, string, CommandResponse> requestHandlerFunc;
 
         private bool isServerActive;
 
         private StreamSocketListener listener;
 
-        private readonly Func<string, string, CommandResponse> requestHandlerFunc;
-
         private int listeningPort;
 
         #endregion
 
-        #region Public Methods and Operators
+        #region Constructors and Destructors
 
         public SocketServer(Func<string, string, CommandResponse> requestHandlerFunc)
         {
@@ -52,16 +40,9 @@
             this.requestHandlerFunc = requestHandlerFunc;
         }
 
-        public void InitializeAndStart(UIElement visualRoot)
-        {
-            this.Start(9998);
-        }
+        #endregion
 
-
-        public void InitializeAndStart(UIElement visualRoot, int port)
-        {
-            this.Start(port);
-        }
+        #region Public Methods and Operators
 
         public async void Start(int port)
         {
@@ -118,13 +99,12 @@
         }
 
         private async void ListenerConnectionReceived(
-            StreamSocketListener sender,
+            StreamSocketListener sender, 
             StreamSocketListenerConnectionReceivedEventArgs args)
         {
             await Task.Run(() => this.HandleRequest(args.Socket));
         }
 
         #endregion
-
     }
 }
