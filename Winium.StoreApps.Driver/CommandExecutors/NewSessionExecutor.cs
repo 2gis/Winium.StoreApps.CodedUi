@@ -23,7 +23,8 @@
             // TODO Add code to start emulator or device and deploy app
             session.Deployer = new Deployer(
                 session.ActualCapabilities.DeviceName, 
-                session.ActualCapabilities.DeviceIpAddress);
+                session.ActualCapabilities.DeviceIpAddress,
+                session.ActualCapabilities.Locale);
 
             if (!session.ActualCapabilities.DebugCodedUi)
             {

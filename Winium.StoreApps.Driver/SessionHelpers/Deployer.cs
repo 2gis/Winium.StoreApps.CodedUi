@@ -7,6 +7,7 @@
     using System.IO;
     using System.Linq;
 
+    using Microsoft.SmartDevice.Connectivity.Interface;
     using Microsoft.SmartDevice.MultiTargeting.Connectivity;
 
     using Winium.StoreApps.Common;
@@ -26,14 +27,18 @@
 
         private Process codedUiTestProcess;
 
+        private IDevice device;
+
         #endregion
 
         #region Constructors and Destructors
 
-        public Deployer(string deviceName, string ipAddress = null)
+        public Deployer(string deviceName, string ipAddress, string localeTag)
         {
             this.IpAddress = ipAddress;
             this.DeviceName = deviceName;
+
+            this.Culture = new CultureInfo(localeTag);
 
             this.Connect();
         }
@@ -41,6 +46,8 @@
         #endregion
 
         #region Public Properties
+
+        public CultureInfo Culture { get; private set; }
 
         public string DeviceName { get; private set; }
 
@@ -54,6 +61,8 @@
         {
             this.codedUiTestProcess.CloseMainWindow();
             this.codedUiTestProcess.Close();
+
+            this.device.Disconnect();
         }
 
         public void DeployCodedUiTestServer()
@@ -62,7 +71,7 @@
 
             var runSettingsDoc = new RunSettings(this.DeviceName);
             var tempFilePath = Path.GetTempFileName();
-            
+
             runSettingsDoc.XmlDoc.Save(tempFilePath);
 
             // TODO We should generate run settings to specify device/emulator
@@ -72,11 +81,10 @@
                                              Arguments =
                                                  string.Format(
                                                      "\"{0}\" /Settings:\"{1}\"", 
-                                                     CodedUiTestDllPath,
+                                                     CodedUiTestDllPath, 
                                                      tempFilePath)
                                          };
             this.codedUiTestProcess = Process.Start(codedUiTestLoopPsi);
-
         }
 
         public void Install()
@@ -89,7 +97,7 @@
 
         private void Connect()
         {
-            var connectivity = new MultiTargetingConnectivity(CultureInfo.CurrentUICulture.LCID);
+            var connectivity = new MultiTargetingConnectivity(this.Culture.LCID);
 
             var connectableDevices = connectivity.GetConnectableDevices();
 
@@ -103,7 +111,7 @@
             this.DeviceName = matchingDevice.Name;
             Logger.Info("Connecting to {0}...", this.DeviceName);
 
-            var device = matchingDevice.Connect();
+            this.device = matchingDevice.Connect();
 
             // "deviceIpAddress" capability is ignored for emulators
             if (this.IpAddress == null || matchingDevice.IsEmulator())
@@ -111,12 +119,11 @@
                 string sourceIp;
                 string destinationIp;
                 int destinationPort;
-                device.GetEndPoints(9998, out sourceIp, out destinationIp, out destinationPort);
+                this.device.GetEndPoints(9998, out sourceIp, out destinationIp, out destinationPort);
                 this.IpAddress = destinationIp;
             }
 
             Logger.Info("CodedUI Test server IP address is {0}", this.IpAddress);
-
         }
 
         #endregion

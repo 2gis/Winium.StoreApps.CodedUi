@@ -2,6 +2,8 @@
 {
     #region
 
+    using System.Globalization;
+
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -18,6 +20,7 @@
             this.InnerPort = 9998;
             this.TakesScreenshot = true;
             this.DebugCodedUi = false;
+            this.Locale = CultureInfo.CurrentCulture.Name;
         }
 
         #endregion
@@ -44,6 +47,9 @@
 
         [JsonProperty("innerPort")]
         public int InnerPort { get; set; }
+
+        [JsonProperty("locale")]
+        public string Locale { get; set; }
 
         [JsonProperty("takesScreenshot")]
         public bool TakesScreenshot { get; set; }
