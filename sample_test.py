@@ -2,6 +2,7 @@
 from time import sleep
 import unittest
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -21,15 +22,15 @@ class Test(unittest.TestCase):
             desired_capabilities={
                 'deviceName': 'Emulator',
                 'debugCodedUI': False,
-                'deviceIpAddress': '10.54.7.139'
+                'deviceIpAddress': '10.54.7.139',
+                'locale': 'en-US'
             })
 
     def tearDown(self):
         self.driver.quit()
 
     def test_sample(self):
-		# Assumes that Calendar was at leas once openned on current emulator. It throws Permission dialog at first start that is not handled here
-		
+
         # FIXME for some reason tiles can not be found by its full AutomationId returned by tile.Current.AutomationId
         calendar_tile_id = '{36F9FA1C-FDAD-4CF0-99EC-C03771ED741A}'  # lets do partial match manually
         tiles = self.driver.find_elements_by_class_name('')
@@ -39,10 +40,17 @@ class Test(unittest.TestCase):
                 tile.click()
                 break
 
-        # no we are in calendar app
+        # accept permisson alert if any
+        try:
+            accept_btn = find_element(self.driver, By.NAME, "allow")
+            accept_btn.click()
+        except TimeoutException:
+            pass
+
+        # now we are in calendar app
         new_btn = find_element(self.driver, By.NAME, "new")
         new_btn.click()
-        sleep(1)
+        sleep(1)  # it all happens fast, lets add sleeps
 
         subject = find_element(self.driver, By.ID, "EditCardSubjectFieldSimplified")
         subject.send_keys(u'Презентация')
@@ -57,22 +65,22 @@ class Test(unittest.TestCase):
         save_btn.click()
         sleep(1)
 
-        print self.driver.page_source
-
-
     def test_winium_test_app(self):
-		# some basic example for TestApp that comes with solution
         text_box = self.driver.find_element_by_tag_name("TextBox")
         print text_box.text
-    
+
         button = self.driver.find_element_by_id("MagicId")
         button.click()
-    
+
         print text_box.text
-    
+
         buttons = self.driver.find_elements_by_class_name("TextBox")
         print [b.text for b in buttons]
-    
+
         list_view = self.driver.find_element_by_id("TopPanel")
         buttons = list_view.find_elements_by_class_name("TextBox")
         print [b.text for b in buttons]
+
+
+if __name__ == "__main__":
+    unittest.main()
