@@ -1,4 +1,4 @@
-﻿namespace CodedUITestProject1
+﻿namespace Winium.StoreApps.CodedUITestProject
 {
     using System;
     using System.Threading.Tasks;

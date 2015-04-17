@@ -5,8 +5,6 @@
     using System;
     using System.Net;
 
-    using CodedUITestProject1;
-
     using Newtonsoft.Json;
 
     using Winium.StoreApps.Common;
@@ -18,6 +16,8 @@
         #region Public Properties
 
         public ElementsRegistry ElementsRegistry { get; set; }
+
+        public WindowsRegistry WindowsRegistry { get; set; }
 
         public Command ExecutedCommand { get; set; }
 

@@ -45,6 +45,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CommandExecutors\CloseExecutor.cs" />
     <Compile Include="CommandExecutors\SwitchToSwitchToWindowExecutor.cs" />
     <Compile Include="CommandExecutors\SendKeysToElementExecutor.cs" />
     <Compile Include="CommandExecutors\FindChildElementExecutor.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Automator.cs" />
     <Compile Include="CodedUiTestLoop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WindowsRegistry.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

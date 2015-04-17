@@ -1,16 +1,13 @@
-﻿namespace CodedUITestProject1
+﻿namespace Winium.StoreApps.CodedUITestProject
 {
     #region
 
-    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Text;
     using System.Threading;
     using System.Windows.Automation;
-
-    using Windows.UI.Xaml.Automation.Peers;
 
     using Winium.StoreApps.CodedUITestProject.CommandExecutors.Helpers;
     using Winium.StoreApps.Common;

@@ -25,6 +25,7 @@ class TestApp(unittest.TestCase):
         'deviceName': 'Emulator',
         'deviceIpAddress': '10.54.4.128',
         'locale': 'en-US',
+        'debugCodedUI': False,
         'app': r"..\..\..\Winium.StoreApps.TestApp\AppPackages\Winium.StoreApps.TestApp_1.0.0.0_AnyCPU_Debug_Test"
                r"\Winium.StoreApps.TestApp_1.0.0.0_AnyCPU_Debug.appx"
     }
@@ -38,7 +39,6 @@ class TestApp(unittest.TestCase):
         self.driver.quit()
 
     def test_sample_app(self):
-
         text_box = self.driver.find_element_by_tag_name("TextBox")
         print(text_box.text)
 
@@ -76,16 +76,12 @@ class TestStandardCalendar(unittest.TestCase):
         self.driver.quit()
 
     def test_sample(self):
-        # FIXME for some reason tiles can not be found by its full AutomationId returned by tile.Current.AutomationId
-        calendar_tile_id = '{36F9FA1C-FDAD-4CF0-99EC-C03771ED741A}'  # lets do partial match manually
-        tiles = self.driver.find_elements_by_class_name('')
-        for tile in tiles:
-            tile_id = tile.get_attribute('AutomationIdProperty')
-            if tile_id.startswith(calendar_tile_id):
-                tile.click()
-                break
-        else:
-            pass
+        # AutomationId for tiles can not be used to find tile directly,
+        # but can be used to launch apps by switching to window
+        # Actula tile_id is very very very long
+        # {36F9FA1C-FDAD-4CF0-99EC-C03771ED741A}:x36f9fa1cyfdady4cf0y99ecyc03771ed741ax:Microsoft.MSCalendar_8wekyb3d8bbwe!x36f9fa1cyfdady4cf0y99ecyc03771ed741ax
+        # but all we care about is part after last colon
+        self.driver.switch_to.window('_:_:Microsoft.MSCalendar_8wekyb3d8bbwe!x36f9fa1cyfdady4cf0y99ecyc03771ed741ax')
 
         # accept permisson alert if any
         try:
@@ -100,17 +96,21 @@ class TestStandardCalendar(unittest.TestCase):
         sleep(1)  # it all happens fast, lets add sleeps
 
         subject = find_element(self.driver, By.ID, "EditCardSubjectFieldSimplified")
-        subject.send_keys(u'Презентация')
+        subject.send_keys(u'Winium Coded UI Demo')
         sleep(1)
 
-        location = find_element(self.driver, By.ID, "EditCardLocationFieldSimplified")
-        location.send_keys(u'12.12 Библиотека')
+        # we should have searched for LocationFiled using name or something, but Calendar app uses slightly different
+        # classes for location filed in 8.1 and 8.1 Update, searching by class works on both
+        location = self.driver.find_elements_by_class_name('TextBox')[1]
+        location.send_keys(u'Your computer')
         sleep(1)
 
         save_btn = find_element(self.driver, By.NAME, "save")
 
         save_btn.click()
-        sleep(1)
+        sleep(2)
+
+        self.driver.close()  # we can close last app opened using switch_to_window
 
 
 if __name__ == "__main__":

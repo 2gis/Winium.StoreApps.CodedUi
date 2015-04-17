@@ -62,7 +62,6 @@
   <ItemGroup>
     <Compile Include="CommandExecutors\QuitExecutor.cs" />
     <Compile Include="SessionHelpers\Capabilities.cs" />
-    <Compile Include="CommandExecutors\CloseExecutor.cs" />
     <Compile Include="Listener\CommandExecutorDispatchTable.cs" />
     <Compile Include="CommandExecutors\CommandExecutorForward.cs" />
     <Compile Include="CommandExecutors\NewSessionExecutor.cs" />

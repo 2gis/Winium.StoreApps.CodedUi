@@ -1,8 +1,11 @@
-﻿namespace CodedUITestProject1
+﻿namespace Winium.StoreApps.CodedUITestProject
 {
     #region
 
+    using System.Collections.Generic;
     using System.Net;
+
+    using Microsoft.VisualStudio.TestTools.UITesting.WindowsRuntimeControls;
 
     using Newtonsoft.Json;
 
@@ -25,6 +28,9 @@
 
         private readonly ElementsRegistry elementsRegistry;
 
+        private readonly WindowsRegistry windowsesRegistry;
+        
+
         #endregion
 
         #region Constructors and Destructors
@@ -32,7 +38,9 @@
         public Automator()
         {
             this.socketServer = new SocketServer(this.RequestHandler);
+
             this.elementsRegistry = new ElementsRegistry();
+            this.windowsesRegistry = new WindowsRegistry();
             this.Session = "AwesomeSession";
         }
 
@@ -107,6 +115,10 @@
             {
                 executor = new SwitchToSwitchToWindowExecutor();
             }
+            else if (command.Name.Equals(DriverCommand.Close))
+            {
+                executor = new CloseExecutor();
+            }
             else if (command.Name.Equals("getSupportedAutomation"))
             {
                 executor = new GetSupportedAutomationExecutor();
@@ -122,6 +134,7 @@
             executor.Session = this.Session;
             executor.ExecutedCommand = command;
             executor.ElementsRegistry = this.elementsRegistry;
+            executor.WindowsRegistry = this.windowsesRegistry;
             return executor.Do();
         }
 
