@@ -10,8 +10,8 @@
     <ProjectGuid>{336F1355-59ED-44C9-9F6C-BB9CDEC48AFF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CodedUITestProject1</RootNamespace>
-    <AssemblyName>CodedUITestProject1</AssemblyName>
+    <RootNamespace>Winium.StoreApps.CodedUITestProject</RootNamespace>
+    <AssemblyName>Winium.StoreApps.CodedUITestProject</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
@@ -45,6 +45,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CommandExecutors\SwitchToSwitchToWindowExecutor.cs" />
     <Compile Include="CommandExecutors\SendKeysToElementExecutor.cs" />
     <Compile Include="CommandExecutors\FindChildElementExecutor.cs" />
     <Compile Include="CommandExecutors\ClickElementExecutor.cs" />

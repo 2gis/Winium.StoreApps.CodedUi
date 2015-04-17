@@ -4,10 +4,9 @@
 
     using System.Net;
 
-    using CodedUITestProject1.CommandExecutors;
-
     using Newtonsoft.Json;
 
+    using Winium.StoreApps.CodedUITestProject.CommandExecutors;
     using Winium.StoreApps.Common;
 
     #endregion
@@ -103,6 +102,10 @@
             else if (command.Name.Equals(DriverCommand.GetElementAttribute))
             {
                 executor = new GetElementAttributeExecutor();
+            }
+            else if (command.Name.Equals(DriverCommand.SwitchToWindow))
+            {
+                executor = new SwitchToSwitchToWindowExecutor();
             }
             else if (command.Name.Equals("getSupportedAutomation"))
             {

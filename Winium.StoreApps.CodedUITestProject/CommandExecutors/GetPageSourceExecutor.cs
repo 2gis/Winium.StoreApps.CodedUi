@@ -1,4 +1,4 @@
-﻿namespace CodedUITestProject1.CommandExecutors
+﻿namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 {
     #region
 

@@ -1,5 +1,5 @@
 ﻿
-namespace CodedUITestProject1.CommandExecutors
+namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 {
     using Microsoft.VisualStudio.TestTools.UITesting;
 

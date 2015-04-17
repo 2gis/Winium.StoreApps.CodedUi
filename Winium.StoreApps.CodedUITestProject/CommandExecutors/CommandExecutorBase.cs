@@ -1,9 +1,11 @@
-﻿namespace CodedUITestProject1.CommandExecutors
+﻿namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 {
     #region
 
     using System;
     using System.Net;
+
+    using CodedUITestProject1;
 
     using Newtonsoft.Json;
 

@@ -6,7 +6,6 @@
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Threading;
 
     using Microsoft.Phone.Tools.Deploy;
     using Microsoft.SmartDevice.Connectivity.Interface;
@@ -21,7 +20,7 @@
         #region Constants
 
         private const string CodedUiTestDllPath =
-            @"..\..\..\Winium.StoreApps.CodedUITestProject\bin\Debug\CodedUITestProject1.dll";
+            @"..\..\..\Winium.StoreApps.CodedUITestProject\bin\Debug\Winium.StoreApps.CodedUITestProject.dll";
 
         #endregion
 

@@ -12,8 +12,7 @@
 
     using Windows.UI.Xaml.Automation.Peers;
 
-    using CodedUITestProject1.CommandExecutors.Helpers;
-
+    using Winium.StoreApps.CodedUITestProject.CommandExecutors.Helpers;
     using Winium.StoreApps.Common;
 
     #endregion

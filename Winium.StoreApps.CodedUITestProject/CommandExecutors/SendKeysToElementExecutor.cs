@@ -1,5 +1,5 @@
 ﻿
-namespace CodedUITestProject1.CommandExecutors
+namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 {
     using System.Linq;
     using System.Windows.Automation;

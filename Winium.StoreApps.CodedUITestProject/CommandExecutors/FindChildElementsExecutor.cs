@@ -1,9 +1,8 @@
-﻿namespace CodedUITestProject1.CommandExecutors
+﻿namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 {
     using System.Linq;
 
-    using CodedUITestProject1.CommandExecutors.Helpers;
-
+    using Winium.StoreApps.CodedUITestProject.CommandExecutors.Helpers;
     using Winium.StoreApps.Common;
 
     public class FindChildElementsExecutor : CommandExecutorBase
