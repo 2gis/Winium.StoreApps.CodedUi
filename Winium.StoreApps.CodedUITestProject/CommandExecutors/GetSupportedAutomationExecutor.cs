@@ -21,7 +21,7 @@
         }
 
 
-        private static string GetPatterns(AutomationElement element)
+        internal static string GetPatterns(AutomationElement element)
         {
             var properties = element.GetSupportedProperties();
 

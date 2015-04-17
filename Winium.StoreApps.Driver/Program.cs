@@ -3,6 +3,8 @@
     #region
 
     using System;
+    using System.Globalization;
+    using System.Threading;
 
     #endregion
 
@@ -13,16 +15,16 @@
         [STAThread]
         private static void Main(string[] args)
         {
-            var listeningPort = 9999;
+            const int ListeningPort = 9999;
 
             Logger.TargetConsole(true);
 
             try
             {
-                var listener = new Listener(listeningPort);
+                var listener = new Listener(ListeningPort);
                 Listener.UrnPrefix = string.Empty;
 
-                Console.WriteLine("Starting Winium.StoreApps Driver on port {0}\n", listeningPort);
+                Console.WriteLine("Starting Winium.StoreApps Driver on port {0}\n", ListeningPort);
 
                 listener.StartListening();
             }

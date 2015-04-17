@@ -2,12 +2,9 @@
 {
     #region
 
-    using System;
     using System.Net;
 
     using CodedUITestProject1.CommandExecutors;
-
-    using Microsoft.VisualBasic.CompilerServices;
 
     using Newtonsoft.Json;
 
@@ -111,17 +108,18 @@
             {
                 executor = new GetSupportedAutomationExecutor();
             }
-            
 
-            if (executor != null)
+            if (executor == null)
             {
-                executor.Session = this.Session;
-                executor.ExecutedCommand = command;
-                executor.ElementsRegistry = this.elementsRegistry;
-                return executor.Do();
+                return CommandResponse.Create(
+                    HttpStatusCode.NotImplemented,
+                    string.Format("Command '{0}' not yet implemented.", command.Name));
             }
 
-            return CommandResponse.Create(HttpStatusCode.NotImplemented, "Oh no!");
+            executor.Session = this.Session;
+            executor.ExecutedCommand = command;
+            executor.ElementsRegistry = this.elementsRegistry;
+            return executor.Do();
         }
 
         #endregion

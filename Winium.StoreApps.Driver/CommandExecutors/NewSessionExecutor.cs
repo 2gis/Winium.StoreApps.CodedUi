@@ -32,6 +32,11 @@
                 session.Deployer.DeployCodedUiTestServer();
             }
 
+            if (!string.IsNullOrEmpty(session.ActualCapabilities.App))
+            {
+                session.Deployer.Install(session.ActualCapabilities.App);
+            }
+
             session.CommandForwarder = new Requester(session.Deployer.IpAddress, session.ActualCapabilities.InnerPort);
 
             return this.JsonResponse(ResponseStatus.Success, session.ActualCapabilities);

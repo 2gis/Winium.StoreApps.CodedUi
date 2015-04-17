@@ -6,7 +6,9 @@
     using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Threading;
 
+    using Microsoft.Phone.Tools.Deploy;
     using Microsoft.SmartDevice.Connectivity.Interface;
     using Microsoft.SmartDevice.MultiTargeting.Connectivity;
 
@@ -29,18 +31,21 @@
 
         private IDevice device;
 
+        private ConnectableDevice connectableDevice;
+
+        private IRemoteApplication application;
+
         #endregion
 
         #region Constructors and Destructors
 
-        public Deployer(string deviceName, string ipAddress, string localeTag)
+        public Deployer(string desiredDeviceName, string ipAddress, string localeTag)
         {
             this.IpAddress = ipAddress;
-            this.DeviceName = deviceName;
 
             this.Culture = new CultureInfo(localeTag);
 
-            this.Connect();
+            this.Connect(desiredDeviceName);
         }
 
         #endregion
@@ -49,7 +54,13 @@
 
         public CultureInfo Culture { get; private set; }
 
-        public string DeviceName { get; private set; }
+        public string DeviceName
+        {
+            get
+            {
+                return this.connectableDevice == null ? null : this.connectableDevice.Name;
+            }
+        }
 
         public string IpAddress { get; private set; }
 
@@ -87,34 +98,50 @@
             this.codedUiTestProcess = Process.Start(codedUiTestLoopPsi);
         }
 
-        public void Install()
+        public void Install(string appxPath)
         {
+            var appManifestInfo = Utils.ReadAppManifestInfoFromPackage(appxPath);
+            var devices = Utils.GetDevices();
+            var deviceInfo = devices.First(x => x.ToString().Equals(this.DeviceName));
+
+            GlobalOptions.LaunchAfterInstall = true;
+            Utils.InstallApplication(deviceInfo, appManifestInfo, DeploymentOptions.None, appxPath);
+
+            Logger.Info("Successfully deployed using Microsoft.Phone.Tools.Deploy");
+
+            this.application = device.GetApplication(appManifestInfo.ProductId);
         }
 
         #endregion
 
         #region Methods
 
-        private void Connect()
+        private void Connect(string desiredDeviceName)
         {
             var connectivity = new MultiTargetingConnectivity(this.Culture.LCID);
 
             var connectableDevices = connectivity.GetConnectableDevices();
 
-            var matchingDevice = connectableDevices.FirstOrDefault(x => x.Name.StartsWith(this.DeviceName));
+            var matchingDevice = connectableDevices.FirstOrDefault(x => x.Name.StartsWith(desiredDeviceName));
 
             if (matchingDevice == null)
             {
-                throw new AutomationException("No devices or emulators found with name {0}", this.DeviceName);
+                throw new AutomationException("No devices or emulators found with name {0}", desiredDeviceName);
             }
 
-            this.DeviceName = matchingDevice.Name;
-            Logger.Info("Connecting to {0}...", this.DeviceName);
+            this.connectableDevice = matchingDevice;
 
+            Logger.Info("Connecting to {0}...", this.DeviceName);
+            
             this.device = matchingDevice.Connect();
 
+            this.GetIpAddress(matchingDevice.IsEmulator());
+        }
+
+        private void GetIpAddress(bool isEmulator)
+        {
             // "deviceIpAddress" capability is ignored for emulators
-            if (this.IpAddress == null || matchingDevice.IsEmulator())
+            if (this.IpAddress == null || isEmulator)
             {
                 string sourceIp;
                 string destinationIp;
