@@ -9,31 +9,28 @@ It is based on https://github.com/2gis/Winium.StoreApps
 There are two parts: Winium.StoreApps.Driver and Winium.StoreApps.CodedUITestProject
 
 ### Winium.StoreApps.CodedUITestProject
-- Looped CodedUI test that gots deployed to emulator or device (currently emulator is hardcoded in runsettings for vs.test.console, but it can be generated at runtime).
+- Looped CodedUI test that gets deployed to selected emulator or device
 - Runs Socketserver that listens for automation commands (those commands correspond to JsonWireProtocol commands)
 
 ### Winium.StoreApps.Driver
 - Selenium Remote WebDriver implementation
 - Listens for your test commands
 - Handles NewSession command
- - Start emulator or device and deploys your app (currently not implemented in protype, but implemented in parent repository)
+ - Start emulator or device and deploys your app
  - Deploys Winium.StoreApps.CodedUITestProject
--  Handles Close command
+-  Handles Quit command
  - Stops Winium.StoreApps.CodedUITestProject server
-- Proxies all commands (except NewSession and Close) to Winium.StoreApps.CodedUITestProject
+- Proxies all commands (except NewSession and Quit) to Winium.StoreApps.CodedUITestProject
 
 
 ## How to run test
 
-This is prototype only. What emulator to use and emulator's ip are hardcoded (but it can be done programmatically, see parent repository).
-
 1. Build solution
-2. Deploy `Winium.StoreApps.TestApp` to `Emulator 8.1 WVGA 4 inch 512MB`. You will need to launch emulator and deploy your app under test using Visual Studio or AppDeployer.
-3. If you have Visual Studio different from 2013 or in non standard path, then replace `VsTestConsolePath` value in App.config with actual path to `vstest.console.exe`. Note: different versions of `vs.test.console.exe` might require different command line options, we tested prototype only against VS 2013.
+2. If you have Visual Studio different from 2013 or in non standard path, then replace `VsTestConsolePath` value in App.config with actual path to `vstest.console.exe`. Note: different versions of `vs.test.console.exe` might require different command line options, we tested prototype only against VS 2013.
+3. Optionally. Build and create store package (`appx`) for `Winium.StoreApps.TestApp` (if you want to run test against it)
 4. Run `Winium.StoreApps.Driver`
-5. Run tests (solution comes with `sample_test.py`)
+5. Run tests (solution comes with [samples](https://github.com/2gis/Winium.StoreApps.CodedUi/TestExamples/test_sample.py))
 
-This is only a prototype. App deployment will be made programmatically in future versions.
 We already support some basic commands:
 - NewSession
 - FindElement
@@ -42,4 +39,6 @@ We already support some basic commands:
 - FindChildElements
 - GetElementText
 - ClickElement
+- SendKeysToElement
+- SwitchToWindow
 - Close
