@@ -6,6 +6,8 @@
     using System.Globalization;
     using System.Threading;
 
+    using Winium.StoreApps.Driver.Listener;
+
     #endregion
 
     internal class Program
@@ -21,8 +23,8 @@
 
             try
             {
-                var listener = new Listener(ListeningPort);
-                Listener.UrnPrefix = string.Empty;
+                var listener = new JwpListener(ListeningPort);
+                JwpListener.UrnPrefix = string.Empty;
 
                 Console.WriteLine("Starting Winium.StoreApps Driver on port {0}\n", ListeningPort);
 

@@ -1,4 +1,4 @@
-﻿namespace Winium.StoreApps.Driver
+﻿namespace Winium.StoreApps.Driver.Listener
 {
     #region
 
@@ -9,10 +9,11 @@
     using System.Net.Sockets;
 
     using Winium.StoreApps.Common;
+    using Winium.StoreApps.Driver.CommandExecutors;
 
     #endregion
 
-    public class Listener
+    public class JwpListener
     {
         #region Static Fields
 
@@ -20,11 +21,12 @@
 
         #endregion
 
+        // private CommandExecutorDispatchTable executorDispatcher;
         #region Fields
 
-        private UriDispatchTables dispatcher;
+        private readonly ExecutorsDispatcher commandExecutorsDispatcher;
 
-        private CommandExecutorDispatchTable executorDispatcher;
+        private UriDispatchTables dispatcher;
 
         private TcpListener listener;
 
@@ -32,9 +34,13 @@
 
         #region Constructors and Destructors
 
-        public Listener(int listenerPort)
+        public JwpListener(int listenerPort)
         {
             this.Port = listenerPort;
+
+            this.commandExecutorsDispatcher = new ExecutorsDispatcher(
+                typeof(CommandExecutorBase).Assembly, 
+                typeof(CommandExecutorBase));
         }
 
         #endregion
@@ -74,7 +80,6 @@
 
                 this.Prefix = new Uri(string.Format(CultureInfo.InvariantCulture, "http://localhost:{0}", this.Port));
                 this.dispatcher = new UriDispatchTables(new Uri(this.Prefix, UrnPrefix));
-                this.executorDispatcher = new CommandExecutorDispatchTable();
 
                 // Start listening for client requests.
                 this.listener.Start();
@@ -170,7 +175,10 @@
         private CommandResponse ProcessCommand(Command command)
         {
             Logger.Info("COMMAND {0}\r\n{1}", command.Name, command.Parameters.ToString());
-            var executor = this.executorDispatcher.GetExecutor(command.Name);
+            var executor = this.commandExecutorsDispatcher.GetExecutor<CommandExecutorBase>(
+                command.Name, 
+                typeof(CommandExecutorForward));
+
             executor.ExecutedCommand = command;
             var respnose = executor.Do();
             Logger.Debug("RESPONSE:\r\n{0}", respnose);

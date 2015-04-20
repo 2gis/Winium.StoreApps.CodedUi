@@ -6,7 +6,7 @@
 
     #endregion
 
-    public class SwitchToSwitchToWindowExecutor : CommandExecutorBase
+    public class SwitchToWindowExecutor : CommandExecutorBase
     {
         #region Methods
 

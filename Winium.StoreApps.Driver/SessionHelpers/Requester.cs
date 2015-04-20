@@ -11,7 +11,6 @@
     using Newtonsoft.Json;
 
     using Winium.StoreApps.Common;
-    using Winium.StoreApps.Common.Exceptions;
 
     #endregion
 

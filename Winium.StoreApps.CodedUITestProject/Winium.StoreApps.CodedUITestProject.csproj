@@ -46,7 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CommandExecutors\CloseExecutor.cs" />
-    <Compile Include="CommandExecutors\SwitchToSwitchToWindowExecutor.cs" />
+    <Compile Include="CommandExecutors\SwitchToWindowExecutor.cs" />
     <Compile Include="CommandExecutors\SendKeysToElementExecutor.cs" />
     <Compile Include="CommandExecutors\FindChildElementExecutor.cs" />
     <Compile Include="CommandExecutors\ClickElementExecutor.cs" />

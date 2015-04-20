@@ -62,12 +62,11 @@
   <ItemGroup>
     <Compile Include="CommandExecutors\QuitExecutor.cs" />
     <Compile Include="SessionHelpers\Capabilities.cs" />
-    <Compile Include="Listener\CommandExecutorDispatchTable.cs" />
     <Compile Include="CommandExecutors\CommandExecutorForward.cs" />
     <Compile Include="CommandExecutors\NewSessionExecutor.cs" />
     <Compile Include="CommandExecutors\CommandExecutorBase.cs" />
     <Compile Include="Listener\HttpRequest.cs" />
-    <Compile Include="Listener\Listener.cs" />
+    <Compile Include="Listener\JWPListener.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="SessionHelpers\Deployer.cs" />
     <Compile Include="Program.cs" />
@@ -75,7 +74,7 @@
     <Compile Include="SessionHelpers\Requester.cs" />
     <Compile Include="SessionHelpers\RunSettings.cs" />
     <Compile Include="SessionHelpers\Session.cs" />
-    <Compile Include="SessionsManager.cs" />
+    <Compile Include="SessionHelpers\SessionsManager.cs" />
     <Compile Include="UriDispatchTables.cs" />
   </ItemGroup>
   <ItemGroup>

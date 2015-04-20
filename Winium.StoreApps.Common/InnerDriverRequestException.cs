@@ -1,4 +1,4 @@
-﻿namespace Winium.StoreApps.Common.Exceptions
+﻿namespace Winium.StoreApps.Common
 {
     #region
 

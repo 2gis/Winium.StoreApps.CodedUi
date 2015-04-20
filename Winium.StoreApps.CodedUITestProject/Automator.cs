@@ -2,10 +2,8 @@
 {
     #region
 
-    using System.Collections.Generic;
     using System.Net;
-
-    using Microsoft.VisualStudio.TestTools.UITesting.WindowsRuntimeControls;
+    using System.Reflection;
 
     using Newtonsoft.Json;
 
@@ -24,12 +22,13 @@
 
         #region Fields
 
-        private readonly SocketServer socketServer;
+        private readonly ExecutorsDispatcher commandsExecutorsDispatcher;
 
         private readonly ElementsRegistry elementsRegistry;
 
+        private readonly SocketServer socketServer;
+
         private readonly WindowsRegistry windowsesRegistry;
-        
 
         #endregion
 
@@ -42,6 +41,9 @@
             this.elementsRegistry = new ElementsRegistry();
             this.windowsesRegistry = new WindowsRegistry();
             this.Session = "AwesomeSession";
+
+            this.commandsExecutorsDispatcher =
+                new ExecutorsDispatcher(typeof(CommandExecutorBase).GetTypeInfo().Assembly, typeof(CommandExecutorBase));
         }
 
         #endregion
@@ -74,60 +76,12 @@
 
             CommandExecutorBase executor = null;
 
-            // TODO replace with command dispatcher idctionary (with some reflection magic)
-            if (command.Name.Equals(DriverCommand.GetPageSource))
-            {
-                executor = new GetPageSourceExecutor();
-            }
-            else if (command.Name.Equals(DriverCommand.FindElement))
-            {
-                executor = new FindElementExecutor();
-            }
-            else if (command.Name.Equals(DriverCommand.FindChildElement))
-            {
-                executor = new FindChildElementExecutor();
-            }
-            else if (command.Name.Equals(DriverCommand.FindElements))
-            {
-                executor = new FindElementsExecutor();
-            }
-            else if (command.Name.Equals(DriverCommand.FindChildElements))
-            {
-                executor = new FindChildElementsExecutor();
-            }
-            else if (command.Name.Equals(DriverCommand.GetElementText))
-            {
-                executor = new GetElementTextExecutor();
-            }
-            else if (command.Name.Equals(DriverCommand.ClickElement))
-            {
-                executor = new ClickElementExecutor();
-            }
-            else if (command.Name.Equals(DriverCommand.SendKeysToElement))
-            {
-                executor = new SendKeysToElementExecutor();
-            }
-            else if (command.Name.Equals(DriverCommand.GetElementAttribute))
-            {
-                executor = new GetElementAttributeExecutor();
-            }
-            else if (command.Name.Equals(DriverCommand.SwitchToWindow))
-            {
-                executor = new SwitchToSwitchToWindowExecutor();
-            }
-            else if (command.Name.Equals(DriverCommand.Close))
-            {
-                executor = new CloseExecutor();
-            }
-            else if (command.Name.Equals("getSupportedAutomation"))
-            {
-                executor = new GetSupportedAutomationExecutor();
-            }
+            executor = this.commandsExecutorsDispatcher.GetExecutor<CommandExecutorBase>(command.Name);
 
             if (executor == null)
             {
                 return CommandResponse.Create(
-                    HttpStatusCode.NotImplemented,
+                    HttpStatusCode.NotImplemented, 
                     string.Format("Command '{0}' not yet implemented.", command.Name));
             }
 

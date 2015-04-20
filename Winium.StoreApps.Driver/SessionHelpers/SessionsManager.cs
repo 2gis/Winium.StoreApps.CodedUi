@@ -1,10 +1,8 @@
-﻿namespace Winium.StoreApps.Driver
+﻿namespace Winium.StoreApps.Driver.SessionHelpers
 {
     #region
 
     using System.Collections.Generic;
-
-    using Winium.StoreApps.Driver.SessionHelpers;
 
     #endregion
 
