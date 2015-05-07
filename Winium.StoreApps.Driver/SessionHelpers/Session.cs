@@ -2,14 +2,12 @@
 {
     internal class Session
     {
+        #region Constructors and Destructors
+
         public Session(string sessionId)
         {
             this.SessionId = sessionId;
         }
-
-        #region Fields
-
-        public string SessionId { get; private set; }
 
         #endregion
 
@@ -21,8 +19,8 @@
 
         public Deployer Deployer { get; set; }
 
+        public string SessionId { get; private set; }
+
         #endregion
-
-
     }
 }

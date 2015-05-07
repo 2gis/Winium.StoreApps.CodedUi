@@ -22,8 +22,9 @@ class TestApp(unittest.TestCase):
     2. Set 'deviceIpAddress' to IP address of device (you can find it in device wi-fi settings)
     """
     desired_capabilities = {
+        # 'deviceName': 'Device',
         'deviceName': 'Emulator',
-        'deviceIpAddress': '10.54.4.128',
+        'deviceIpAddress': '127.0.0.1',
         'locale': 'en-US',
         'debugCodedUI': False,
         'app': r"..\..\..\Winium.StoreApps.TestApp\AppPackages\Winium.StoreApps.TestApp_1.0.0.0_AnyCPU_Debug_Test"
@@ -66,9 +67,9 @@ class TestStandardCalendar(unittest.TestCase):
         self.driver = webdriver.Remote(
             command_executor='http://localhost:9999',
             desired_capabilities={
-                'deviceName': 'Device',
-                # 'debugCodedUI': True,
-                'deviceIpAddress': '10.54.4.128',
+                # 'deviceName': 'Device',
+                'deviceName': 'Emulator',
+                'debugCodedUI': False,
                 'locale': 'en-US',
             })
 

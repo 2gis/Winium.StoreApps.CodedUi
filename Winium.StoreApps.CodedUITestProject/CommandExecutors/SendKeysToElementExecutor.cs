@@ -1,13 +1,17 @@
-﻿
-namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
+﻿namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 {
+    #region
+
     using System.Linq;
-    using System.Windows.Automation;
 
     using Winium.StoreApps.Common;
 
+    #endregion
+
     public class SendKeysToElementExecutor : CommandExecutorBase
     {
+        #region Methods
+
         protected override string DoImpl()
         {
             var registredId = this.ExecutedCommand.Parameters["ID"].ToObject<string>();
@@ -20,5 +24,7 @@ namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 
             return this.JsonResponse(ResponseStatus.Success, null);
         }
+
+        #endregion
     }
 }

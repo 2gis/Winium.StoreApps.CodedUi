@@ -8,15 +8,11 @@
 
     public class AutomationException : Exception
     {
-        #region Fields
-
-        #endregion
-
         #region Constructors and Destructors
 
         public AutomationException()
         {
-            Status = ResponseStatus.UnknownError;
+            this.Status = ResponseStatus.UnknownError;
         }
 
         public AutomationException(string message, ResponseStatus status)
@@ -28,13 +24,13 @@
         public AutomationException(string message, params object[] args)
             : base(string.Format(message, args))
         {
-            Status = ResponseStatus.UnknownError;
+            this.Status = ResponseStatus.UnknownError;
         }
 
         public AutomationException(string message, Exception innerException)
             : base(message, innerException)
         {
-            Status = ResponseStatus.UnknownError;
+            this.Status = ResponseStatus.UnknownError;
         }
 
         #endregion

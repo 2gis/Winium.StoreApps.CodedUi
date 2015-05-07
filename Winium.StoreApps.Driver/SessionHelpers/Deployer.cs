@@ -32,8 +32,6 @@
 
         private ConnectableDevice connectableDevice;
 
-        private IRemoteApplication application;
-
         #endregion
 
         #region Constructors and Destructors
@@ -107,8 +105,6 @@
             Utils.InstallApplication(deviceInfo, appManifestInfo, DeploymentOptions.None, appxPath);
 
             Logger.Info("Successfully deployed using Microsoft.Phone.Tools.Deploy");
-
-            this.application = device.GetApplication(appManifestInfo.ProductId);
         }
 
         #endregion

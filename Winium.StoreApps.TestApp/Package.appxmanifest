@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="df4f21bc-8ad2-4e67-ade4-e5dc307ba179" Publisher="CN=n.abalov" Version="1.0.0.0" />
+  <Identity Name="df4f21bc-8ad2-4e67-ade4-e5dc307ba179" Publisher="CN=n.abalov" Version="1.0.0.1" />
   <mp:PhoneIdentity PhoneProductId="df4f21bc-8ad2-4e67-ade4-e5dc307ba179" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>WiniumautomationExperimentApp</DisplayName>

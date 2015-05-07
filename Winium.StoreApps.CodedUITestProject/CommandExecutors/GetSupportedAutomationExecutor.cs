@@ -1,24 +1,17 @@
 ﻿namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 {
+    #region
+
     using System.Text;
     using System.Windows.Automation;
 
     using Winium.StoreApps.Common;
 
+    #endregion
+
     public class GetSupportedAutomationExecutor : CommandExecutorBase
     {
-        protected override string DoImpl()
-        {
-            // TODO Buttons do not have any patterns besides Invoke
-            var registredId = this.ExecutedCommand.Parameters["ID"].ToObject<string>();
-
-
-            var element = this.ElementsRegistry.GetRegistredElement(registredId);
-
-
-            return this.JsonResponse(ResponseStatus.Success, GetPatterns(element.AutomationElement));
-        }
-
+        #region Methods
 
         internal static string GetPatterns(AutomationElement element)
         {
@@ -35,5 +28,17 @@
 
             return msg.ToString();
         }
+
+        protected override string DoImpl()
+        {
+            // TODO Buttons do not have any patterns besides Invoke
+            var registredId = this.ExecutedCommand.Parameters["ID"].ToObject<string>();
+
+            var element = this.ElementsRegistry.GetRegistredElement(registredId);
+
+            return this.JsonResponse(ResponseStatus.Success, GetPatterns(element.AutomationElement));
+        }
+
+        #endregion
     }
 }

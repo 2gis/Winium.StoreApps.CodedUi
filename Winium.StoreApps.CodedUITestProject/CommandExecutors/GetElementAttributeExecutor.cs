@@ -1,7 +1,5 @@
 ﻿namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 {
-    using System.Windows.Automation;
-
     using Newtonsoft.Json.Linq;
 
     using Winium.StoreApps.Common;

@@ -1,10 +1,15 @@
-﻿
-namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
+﻿namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 {
+    #region
+
     using Winium.StoreApps.Common;
+
+    #endregion
 
     public class ClickElementExecutor : CommandExecutorBase
     {
+        #region Methods
+
         protected override string DoImpl()
         {
             var registredId = this.ExecutedCommand.Parameters["ID"].ToObject<string>();
@@ -14,5 +19,7 @@ namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 
             return this.JsonResponse(ResponseStatus.Success, null);
         }
+
+        #endregion
     }
 }
