@@ -74,9 +74,7 @@
         {
             var command = JsonConvert.DeserializeObject<Command>(content);
 
-            CommandExecutorBase executor = null;
-
-            executor = this.commandsExecutorsDispatcher.GetExecutor<CommandExecutorBase>(command.Name);
+            var executor = this.commandsExecutorsDispatcher.GetExecutor<CommandExecutorBase>(command.Name);
 
             if (executor == null)
             {

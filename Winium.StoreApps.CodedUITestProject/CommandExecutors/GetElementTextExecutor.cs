@@ -16,7 +16,7 @@
 
 
 
-            return this.JsonResponse(ResponseStatus.Success, GetText(element));
+            return this.JsonResponse(ResponseStatus.Success, element.GetText());
         }
 
 

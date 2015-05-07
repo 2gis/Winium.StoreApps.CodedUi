@@ -16,8 +16,7 @@
             var element = this.ElementsRegistry.GetRegistredElement(registredId);
 
 
-
-            return this.JsonResponse(ResponseStatus.Success, GetPatterns(element));
+            return this.JsonResponse(ResponseStatus.Success, GetPatterns(element.AutomationElement));
         }
 
 

@@ -15,7 +15,7 @@
     {
         #region Fields
 
-        private Dictionary<string, XamlWindow> registry;
+        private readonly Dictionary<string, XamlWindow> registry;
 
         #endregion
 

@@ -1,8 +1,6 @@
 ﻿
 namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 {
-    using Microsoft.VisualStudio.TestTools.UITesting;
-
     using Winium.StoreApps.Common;
 
     public class ClickElementExecutor : CommandExecutorBase
@@ -12,7 +10,7 @@ namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
             var registredId = this.ExecutedCommand.Parameters["ID"].ToObject<string>();
 
             var element = this.ElementsRegistry.GetRegistredElement(registredId);
-            Gesture.Tap(element.GetClickablePoint());
+            element.Click();
 
             return this.JsonResponse(ResponseStatus.Success, null);
         }

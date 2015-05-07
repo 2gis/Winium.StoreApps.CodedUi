@@ -66,6 +66,7 @@
     <Compile Include="CodedUiTestLoop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindowsRegistry.cs" />
+    <Compile Include="WiniumElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

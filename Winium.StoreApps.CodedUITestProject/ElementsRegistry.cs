@@ -24,8 +24,7 @@
 
         #region Fields
 
-        // TODO use WeakReference?
-        private readonly Dictionary<string, AutomationElement> registeredElements;
+        private readonly Dictionary<string, WiniumElement> registeredElements;
 
         #endregion
 
@@ -33,7 +32,7 @@
 
         public ElementsRegistry()
         {
-            this.registeredElements = new Dictionary<string, AutomationElement>();
+            this.registeredElements = new Dictionary<string, WiniumElement>();
         }
 
         #endregion
@@ -54,7 +53,7 @@
 
         public string FindElement(string rootRegisteredId, By strategy)
         {
-            var parent = this.GetRegistredElement(rootRegisteredId);
+            var parent = this.GetRegistredElement(rootRegisteredId).AutomationElement;
 
             return this.FindElement(parent, strategy);
         }
@@ -72,14 +71,14 @@
 
         public List<string> FindElements(string rootRegisteredId, By strategy)
         {
-            var parent = this.GetRegistredElement(rootRegisteredId);
+            var parent = this.GetRegistredElement(rootRegisteredId).AutomationElement;
 
             return this.FindElements(parent, strategy);
         }
 
-        public AutomationElement GetRegistredElement(string registeredId)
+        public WiniumElement GetRegistredElement(string registeredId)
         {
-            AutomationElement item;
+            WiniumElement item;
             if (this.registeredElements.TryGetValue(registeredId, out item))
             {
                 // TODO replace with checking for stalness of the element.
@@ -95,20 +94,22 @@
 
         public string RegisterElement(AutomationElement element)
         {
+            /*
             var registeredKey = this.registeredElements.FirstOrDefault(x => x.Value.Equals(element)).Key;
 
             if (registeredKey != null)
             {
                 return registeredKey;
             }
+             */
 
             Interlocked.Increment(ref safeInstanceCount);
 
-            registeredKey = string.Format(
+            var registeredKey = string.Format(
                 "{0}-{1}", 
                 element.GetHashCode(), 
                 safeInstanceCount.ToString(string.Empty, CultureInfo.InvariantCulture));
-            this.registeredElements.Add(registeredKey, element);
+            this.registeredElements.Add(registeredKey, new WiniumElement(element));
 
             return registeredKey;
         }
