@@ -8,7 +8,7 @@
     using Newtonsoft.Json;
 
     using Winium.StoreApps.Common;
-    using Winium.StoreApps.Driver.SessionHelpers;
+    using Winium.StoreApps.Driver.Helpers;
 
     #endregion
 
