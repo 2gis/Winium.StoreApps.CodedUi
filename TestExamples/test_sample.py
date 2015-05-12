@@ -1,6 +1,7 @@
 # coding: utf-8
 from time import sleep
 import unittest
+from xml.etree import ElementTree
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
@@ -38,6 +39,12 @@ class TestApp(unittest.TestCase):
 
     def tearDown(self):
         self.driver.quit()
+
+    def test_page_source(self):
+        source = self.driver.page_source
+        print(source)
+        root = ElementTree.fromstring(source)
+        self.assertGreater(sum(1 for _ in root.iterfind('*')), 1)
 
     def test_sample_app(self):
         text_box = self.driver.find_element_by_tag_name("TextBox")
