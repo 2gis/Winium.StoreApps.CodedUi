@@ -1,4 +1,4 @@
-﻿namespace Winium.StoreApps.Driver.SessionHelpers
+﻿namespace Winium.StoreApps.Driver.Helpers
 {
     #region
 
