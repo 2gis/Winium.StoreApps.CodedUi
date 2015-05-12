@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Winium.StoreApps.Common", "Winium.StoreApps.Common\Winium.StoreApps.Common.csproj", "{E37D13DA-DAFA-4019-AED9-1FEB8B8EBF0B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Winium.StoreApps.Driver", "Winium.StoreApps.Driver\Winium.StoreApps.Driver.csproj", "{39D7E83A-86FF-4BB1-A981-5F7E07EA5FE8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{336F1355-59ED-44C9-9F6C-BB9CDEC48AFF} = {336F1355-59ED-44C9-9F6C-BB9CDEC48AFF}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
