@@ -29,7 +29,7 @@ There are two parts: Winium.StoreApps.Driver and Winium.StoreApps.CodedUITestPro
 2. If you have Visual Studio different from 2013 or in non standard path, then replace `VsTestConsolePath` value in App.config with actual path to `vstest.console.exe`. Note: different versions of `vs.test.console.exe` might require different command line options, we tested prototype only against VS 2013.
 3. Optionally. Build and create store package (`appx`) for `Winium.StoreApps.TestApp` (if you want to run test against it)
 4. Run `Winium.StoreApps.Driver`
-5. Run tests (solution comes with [samples](https://github.com/2gis/Winium.StoreApps.CodedUi/TestExamples/test_sample.py))
+5. Run tests (solution comes with [samples](TestExamples/test_sample.py))
 
 We already support some basic commands:
 - NewSession
