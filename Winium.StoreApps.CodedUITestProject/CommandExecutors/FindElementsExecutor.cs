@@ -13,7 +13,7 @@
             var strategy = this.ExecutedCommand.Parameters["using"].ToObject<string>();
             var value = this.ExecutedCommand.Parameters["value"].ToObject<string>();
 
-            var registredIds = this.ElementsRegistry.FindElements(AutomationElement.RootElement, new By(strategy, value));
+            var registredIds = this.ElementsRegistry.FindElements(WiniumElement.RootElement, new By(strategy, value));
 
             var webElements = registredIds.Select(registredId => new JsonWebElementContent(registredId)).ToList();
 

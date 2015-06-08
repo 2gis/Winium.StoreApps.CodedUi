@@ -2,6 +2,7 @@
 {
     #region
 
+    using System;
     using System.Windows.Automation;
 
     using Winium.StoreApps.Common;
@@ -16,19 +17,19 @@
         {
             if (strategy.Equals("tag name") || strategy.Equals("class name"))
             {
-                this.Condition = new PropertyCondition(AutomationElement.ClassNameProperty, value);
+                this.Predicate = x => x.AutomationElement.Current.ClassName.Equals(value);
                 return;
             }
 
             if (strategy.Equals("id"))
             {
-                this.Condition = new PropertyCondition(AutomationElement.AutomationIdProperty, value);
+                this.Predicate = x => x.AutomationElement.Current.AutomationId.Equals(value);
                 return;
             }
 
             if (strategy.Equals("name"))
             {
-                this.Condition = new PropertyCondition(AutomationElement.NameProperty, value);
+                this.Predicate = x => x.AutomationElement.Current.Name.Equals(value);
                 return;
             }
 
@@ -39,7 +40,7 @@
 
         #region Public Properties
 
-        public Condition Condition { get; private set; }
+        public Predicate<WiniumElement> Predicate { get; private set; } 
 
         #endregion
     }
