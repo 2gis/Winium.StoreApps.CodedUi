@@ -112,7 +112,7 @@
         {
             return
                 from AutomationElement x in
-                    this.AutomationElement.FindAll(TreeScope.Descendants, Condition.TrueCondition)
+                    this.AutomationElement.FindAll(TreeScope.Children, Condition.TrueCondition)
                 select new WiniumElement(x);
         }
 
