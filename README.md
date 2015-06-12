@@ -22,6 +22,8 @@ There are two parts: Winium.StoreApps.Driver and Winium.StoreApps.CodedUITestPro
  - Stops Winium.StoreApps.CodedUITestProject server
 - Proxies all commands (except NewSession and Quit) to Winium.StoreApps.CodedUITestProject
 
+### Winium.StoreApps vs Winium.StoreApps.CodedUi
+[Winium.StoreApps vs Winium.StoreApps.CodedUi](https://github.com/2gis/Winium/wiki/Winium.StoreApps-vs-Winium.StoreApps.CodedUi)
 
 ## How to run test
 
