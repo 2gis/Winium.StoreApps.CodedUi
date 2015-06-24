@@ -28,9 +28,9 @@
 
         private Process codedUiTestProcess;
 
-        private IDevice device;
-
         private ConnectableDevice connectableDevice;
+
+        private IDevice device;
 
         #endregion
 
@@ -67,9 +67,8 @@
 
         public void Close()
         {
-            this.codedUiTestProcess.CloseMainWindow();
-            this.codedUiTestProcess.Close();
-
+            // this.codedUiTestProcess.CloseMainWindow();
+            // this.codedUiTestProcess.Close();
             this.device.Disconnect();
         }
 
@@ -85,14 +84,22 @@
             // TODO We should generate run settings to specify device/emulator
             var codedUiTestLoopPsi = new ProcessStartInfo
                                          {
+                                             UseShellExecute = false, 
+                                             RedirectStandardError = true, 
+                                             RedirectStandardOutput = true, 
                                              FileName = pathToVsTestconsole, 
                                              Arguments =
                                                  string.Format(
-                                                     "\"{0}\" /Settings:\"{1}\"", 
+                                                     "\"{0}\" /Settings:\"{1}\" /logger:trx", 
                                                      CodedUiTestDllPath, 
                                                      tempFilePath)
                                          };
-            this.codedUiTestProcess = Process.Start(codedUiTestLoopPsi);
+
+            this.codedUiTestProcess = new Process { StartInfo = codedUiTestLoopPsi };
+            this.codedUiTestProcess.OutputDataReceived += CaptureOutput;
+            this.codedUiTestProcess.ErrorDataReceived += CaptureOutput;
+            this.codedUiTestProcess.Start();
+            this.codedUiTestProcess.BeginOutputReadLine();
         }
 
         public void Install(string appxPath)
@@ -111,6 +118,11 @@
 
         #region Methods
 
+        private static void CaptureOutput(object sender, DataReceivedEventArgs args)
+        {
+            Logger.Debug("CodedUI: {0}", args.Data);
+        }
+
         private void Connect(string desiredDeviceName)
         {
             var connectivity = new MultiTargetingConnectivity(this.Culture.LCID);
@@ -127,7 +139,7 @@
             this.connectableDevice = matchingDevice;
 
             Logger.Info("Connecting to {0}...", this.DeviceName);
-            
+
             this.device = matchingDevice.Connect();
 
             this.GetIpAddress(matchingDevice.IsEmulator());

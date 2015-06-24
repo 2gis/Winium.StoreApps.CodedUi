@@ -8,6 +8,7 @@
         {
             if (!this.Session.ActualCapabilities.DebugCodedUi)
             {
+                this.Session.CommandForwarder.ForwardCommand(this.ExecutedCommand);
                 this.Session.Deployer.Close();
             }
 
