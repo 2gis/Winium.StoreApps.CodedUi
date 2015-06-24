@@ -59,6 +59,7 @@
     <Compile Include="CommandExecutors\GetPageSourceExecutor.cs" />
     <Compile Include="CommandExecutors\GetSupportedAutomationExecutor.cs" />
     <Compile Include="CommandExecutors\Helpers\By.cs" />
+    <Compile Include="CommandExecutors\TouchFlickExecutor.cs" />
     <Compile Include="ElementsRegistry.cs" />
     <Compile Include="SocketServer.cs" />
     <Compile Include="AcceptedRequest.cs" />
