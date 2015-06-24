@@ -2,11 +2,13 @@
 {
     #region
 
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Automation;
     using System.Xml.Linq;
 
+    using Microsoft.VisualStudio.TestTools.UITest.Input;
     using Microsoft.VisualStudio.TestTools.UITesting;
 
     using Winium.StoreApps.Common;
@@ -31,6 +33,14 @@
         #endregion
 
         #region Public Properties
+
+        public static WiniumElement RootElement
+        {
+            get
+            {
+                return new WiniumElement(AutomationElement.RootElement);
+            }
+        }
 
         public AutomationElement AutomationElement
         {
@@ -60,18 +70,33 @@
                 new XAttribute("id", this.AutomationElement.Current.AutomationId), 
                 new XAttribute("name", this.AutomationElement.Current.Name), 
                 new XAttribute("rect", this.AutomationElement.Current.BoundingRectangle), 
-                from x in this.GetChildrens() select x.AsXml());
+                from x in this.IterFind(TreeScope.Children, null) select x.AsXml());
         }
 
         public void Click()
         {
-            Gesture.Tap(this.element.GetClickablePoint());
+            Gesture.Tap(this.GetClickablePoint());
         }
 
         public string GetAttribute(string attributeName)
         {
             // TODO Add actual support for different attributes
             return this.element.Current.AutomationId;
+        }
+
+        public Point GetClickablePoint()
+        {
+            try
+            {
+                return this.element.GetClickablePoint();
+            }
+            catch (NoClickablePointException)
+            {
+                // TODO this is temporary solution for WebView elements, that do not return clickable point even if visible
+                // FIXME middle point of BoundingRectangle might be under anither element or off screen, need some checks
+                var rect = this.AutomationElement.Current.BoundingRectangle;
+                return new Point(rect.Left + (rect.Width / 2), rect.Top + (rect.Height / 2));
+            }
         }
 
         public string GetText()
@@ -92,6 +117,38 @@
             return this.element.Current.Name;
         }
 
+        public IEnumerable<WiniumElement> IterFind(TreeScope scope, Predicate<WiniumElement> predicate)
+        {
+            if (scope != TreeScope.Descendants && scope != TreeScope.Children)
+            {
+                throw new ArgumentException("scope should be one of TreeScope.Descendants or TreeScope.Children");
+            }
+
+            var walker = new TreeWalker(Condition.TrueCondition);
+
+            var elementNode = walker.GetFirstChild(this.AutomationElement);
+
+            while (elementNode != null)
+            {
+                var winiumElement = new WiniumElement(elementNode);
+
+                if (predicate == null || predicate(winiumElement))
+                {
+                    yield return winiumElement;
+                }
+
+                if (scope == TreeScope.Descendants)
+                {
+                    foreach (var descendant in winiumElement.IterFind(scope, predicate))
+                    {
+                        yield return descendant;
+                    }
+                }
+
+                elementNode = walker.GetNextSibling(elementNode);
+            }
+        }
+
         public void SendKeys(string value)
         {
             object patternObj;
@@ -102,18 +159,6 @@
 
             var valuePattern = (ValuePattern)patternObj;
             valuePattern.SetValue(value);
-        }
-
-        #endregion
-
-        #region Methods
-
-        private IEnumerable<WiniumElement> GetChildrens()
-        {
-            return
-                from AutomationElement x in
-                    this.AutomationElement.FindAll(TreeScope.Children, Condition.TrueCondition)
-                select new WiniumElement(x);
         }
 
         #endregion

@@ -39,9 +39,9 @@
 
         #region Public Methods and Operators
 
-        public string FindElement(AutomationElement root, By strategy)
+        public string FindElement(WiniumElement root, By strategy)
         {
-            var element = root.FindFirst(TreeScope.Descendants, strategy.Condition);
+            var element = root.IterFind(TreeScope.Descendants, strategy.Predicate).FirstOrDefault();
 
             if (element == null)
             {
@@ -53,25 +53,21 @@
 
         public string FindElement(string rootRegisteredId, By strategy)
         {
-            var parent = this.GetRegistredElement(rootRegisteredId).AutomationElement;
+            var parent = this.GetRegistredElement(rootRegisteredId);
 
             return this.FindElement(parent, strategy);
         }
 
-        public List<string> FindElements(AutomationElement root, By strategy)
+        public List<string> FindElements(WiniumElement root, By strategy)
         {
-            var elements = root.FindAll(TreeScope.Descendants, strategy.Condition);
+            var elements = root.IterFind(TreeScope.Descendants, strategy.Predicate);
 
-            var registred =
-                (from AutomationElement automationElement in elements select this.RegisterElement(automationElement))
-                    .ToList();
-
-            return registred;
+            return elements.Select(this.RegisterElement).ToList();
         }
 
         public List<string> FindElements(string rootRegisteredId, By strategy)
         {
-            var parent = this.GetRegistredElement(rootRegisteredId).AutomationElement;
+            var parent = this.GetRegistredElement(rootRegisteredId);
 
             return this.FindElements(parent, strategy);
         }
@@ -92,24 +88,15 @@
             throw new AutomationException("Stale element reference", ResponseStatus.StaleElementReference);
         }
 
-        public string RegisterElement(AutomationElement element)
+        public string RegisterElement(WiniumElement element)
         {
-            /*
-            var registeredKey = this.registeredElements.FirstOrDefault(x => x.Value.Equals(element)).Key;
-
-            if (registeredKey != null)
-            {
-                return registeredKey;
-            }
-             */
-
             Interlocked.Increment(ref safeInstanceCount);
 
             var registeredKey = string.Format(
                 "{0}-{1}", 
                 element.GetHashCode(), 
                 safeInstanceCount.ToString(string.Empty, CultureInfo.InvariantCulture));
-            this.registeredElements.Add(registeredKey, new WiniumElement(element));
+            this.registeredElements.Add(registeredKey, element);
 
             return registeredKey;
         }
