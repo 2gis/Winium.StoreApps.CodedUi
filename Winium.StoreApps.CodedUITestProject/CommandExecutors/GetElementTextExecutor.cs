@@ -2,10 +2,12 @@
 {
     #region
 
+    using Winium.StoreApps.CodedUITestProject.Annotations;
     using Winium.StoreApps.Common;
 
     #endregion
 
+    [UsedImplicitly]
     public class GetElementTextExecutor : CommandExecutorBase
     {
         #region Methods

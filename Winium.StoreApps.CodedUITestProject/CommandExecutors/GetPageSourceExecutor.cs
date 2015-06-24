@@ -4,8 +4,11 @@
 
     using System.Windows.Automation;
 
+    using Winium.StoreApps.CodedUITestProject.Annotations;
+
     #endregion
 
+    [UsedImplicitly]
     public class GetPageSourceExecutor : CommandExecutorBase
     {
         #region Methods

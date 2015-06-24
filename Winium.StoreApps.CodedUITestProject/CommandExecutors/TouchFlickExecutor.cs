@@ -9,10 +9,12 @@
     using Microsoft.VisualStudio.TestTools.UITest.Input;
     using Microsoft.VisualStudio.TestTools.UITesting;
 
+    using Winium.StoreApps.CodedUITestProject.Annotations;
     using Winium.StoreApps.Common;
 
     #endregion
 
+    [UsedImplicitly]
     public class TouchFlickExecutor : CommandExecutorBase
     {
         #region Methods

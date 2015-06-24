@@ -2,10 +2,12 @@
 {
     #region
 
+    using Winium.StoreApps.CodedUITestProject.Annotations;
     using Winium.StoreApps.Common;
 
     #endregion
 
+    [UsedImplicitly]
     public class CloseExecutor : CommandExecutorBase
     {
         #region Methods

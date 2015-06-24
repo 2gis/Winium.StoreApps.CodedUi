@@ -2,13 +2,16 @@
 {
     #region
 
+    using System.Globalization;
     using System.Text;
     using System.Windows.Automation;
 
+    using Winium.StoreApps.CodedUITestProject.Annotations;
     using Winium.StoreApps.Common;
 
     #endregion
 
+    [UsedImplicitly]
     public class GetSupportedAutomationExecutor : CommandExecutorBase
     {
         #region Methods
@@ -23,7 +26,7 @@
             foreach (var automationProperty in properties)
             {
                 var value = element.GetCurrentPropertyValue(automationProperty);
-                msg.AppendFormat("{0}: {1}\n", automationProperty.ProgrammaticName, value);
+                msg.AppendFormat(CultureInfo.InvariantCulture, "{0}: {1}\n", automationProperty.ProgrammaticName, value);
             }
 
             return msg.ToString();
