@@ -1,16 +1,14 @@
 ﻿namespace Winium.StoreApps.Driver.CommandExecutors
 {
+    using Winium.StoreApps.Driver.Helpers;
+
     internal class QuitExecutor : CommandExecutorBase
     {
         #region Methods
 
         protected override string DoImpl()
         {
-            if (!this.Session.ActualCapabilities.DebugCodedUi)
-            {
-                this.Session.CommandForwarder.ForwardCommand(this.ExecutedCommand);
-                this.Session.Deployer.Close();
-            }
+            SessionsManager.CloseSession(this.Session.SessionId);
 
             return this.JsonResponse();
         }

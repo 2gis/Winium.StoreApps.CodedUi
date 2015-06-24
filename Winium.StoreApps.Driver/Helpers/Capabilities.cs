@@ -18,9 +18,10 @@
             this.App = string.Empty;
             this.DeviceName = string.Empty;
             this.InnerPort = 9998;
-            this.TakesScreenshot = true;
+            this.DeviceIpAddress = "localhost";
             this.DebugCodedUi = false;
             this.Locale = CultureInfo.CurrentCulture.Name;
+            this.DebugCaptureLogs = false;
         }
 
         #endregion
@@ -37,25 +38,25 @@
         }
 
         [JsonProperty("app")]
-        public string App { get; set; }
+        public string App { get; private set; }
 
         [JsonProperty("deviceName")]
-        public string DeviceName { get; set; }
+        public string DeviceName { get; private set; }
 
         [JsonProperty("deviceIpAddress")]
-        public string DeviceIpAddress { get; set; }
+        public string DeviceIpAddress { get; private set; }
 
         [JsonProperty("innerPort")]
-        public int InnerPort { get; set; }
+        public int InnerPort { get; private set; }
 
         [JsonProperty("locale")]
-        public string Locale { get; set; }
-
-        [JsonProperty("takesScreenshot")]
-        public bool TakesScreenshot { get; set; }
+        public string Locale { get; private set; }
 
         [JsonProperty("debugCodedUI")]
-        public bool DebugCodedUi { get; set; }
+        public bool DebugCodedUi { get; private set; }
+
+        [JsonProperty("debugCaptureLogs")]
+        public bool DebugCaptureLogs { get; private set; }
 
         #endregion
 
@@ -75,11 +76,6 @@
                 });
 
             return capabilities;
-        }
-
-        public string CapabilitiesToJsonString()
-        {
-            return JsonConvert.SerializeObject(this);
         }
 
         #endregion

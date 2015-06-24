@@ -15,7 +15,9 @@
 
         protected override string DoImpl()
         {
-            var session = SessionsManager.CreateSession();
+            this.Session = SessionsManager.CreateSession();
+
+            var session = this.Session;
             var serializedCapability =
                 JsonConvert.SerializeObject(this.ExecutedCommand.Parameters["desiredCapabilities"]);
             session.ActualCapabilities = Capabilities.CapabilitiesFromJsonString(serializedCapability);
@@ -24,7 +26,8 @@
             session.Deployer = new Deployer(
                 session.ActualCapabilities.DeviceName, 
                 session.ActualCapabilities.DeviceIpAddress,
-                session.ActualCapabilities.Locale);
+                session.ActualCapabilities.Locale,
+                session.ActualCapabilities.DebugCaptureLogs);
 
             if (!session.ActualCapabilities.DebugCodedUi)
             {

@@ -1,5 +1,7 @@
 ﻿namespace Winium.StoreApps.Driver.Helpers
 {
+    using Winium.StoreApps.Common;
+
     internal class Session
     {
         #region Constructors and Destructors
@@ -22,5 +24,17 @@
         public string SessionId { get; private set; }
 
         #endregion
+
+        public void Close()
+        {
+            if (this.ActualCapabilities.DebugCodedUi)
+            {
+                return;
+            }
+
+            var quitCommand = new Command(DriverCommand.Quit);
+            this.CommandForwarder.ForwardCommand(quitCommand);
+            this.Deployer.Dispose();
+        }
     }
 }
