@@ -20,8 +20,6 @@
 
         private readonly Func<string, string, CommandResponse> requestHandlerFunc;
 
-        private bool isServerActive;
-
         private StreamSocketListener listener;
 
         private int listeningPort;
@@ -30,8 +28,14 @@
 
         #region Constructors and Destructors
 
+        public bool IsServiceActive { get; private set; }
+
+        public bool ShouldStopAfterResponse { get; set; }
+
         public SocketServer(Func<string, string, CommandResponse> requestHandlerFunc)
         {
+            this.ShouldStopAfterResponse = false;
+
             if (requestHandlerFunc == null)
             {
                 throw new ArgumentNullException("requestHandlerFunc");
@@ -46,14 +50,14 @@
 
         public async void Start(int port)
         {
-            if (this.isServerActive)
+            if (this.IsServiceActive)
             {
                 return;
             }
 
             this.listeningPort = port;
 
-            this.isServerActive = true;
+            this.IsServiceActive = true;
             this.listener = new StreamSocketListener();
             this.listener.Control.QualityOfService = SocketQualityOfService.Normal;
             this.listener.ConnectionReceived += this.ListenerConnectionReceived;
@@ -62,10 +66,10 @@
 
         public void Stop()
         {
-            if (this.isServerActive)
+            if (this.IsServiceActive)
             {
                 this.listener.Dispose();
-                this.isServerActive = false;
+                this.IsServiceActive = false;
             }
         }
 
@@ -96,6 +100,11 @@
             await writer.StoreAsync();
 
             socket.Dispose();
+
+            if (this.ShouldStopAfterResponse)
+            {
+                this.Stop();
+            }
         }
 
         private async void ListenerConnectionReceived(

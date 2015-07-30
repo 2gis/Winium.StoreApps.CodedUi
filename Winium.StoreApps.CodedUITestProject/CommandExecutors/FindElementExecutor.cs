@@ -2,9 +2,11 @@
 {
     using System.Windows.Automation;
 
+    using Winium.StoreApps.CodedUITestProject.Annotations;
     using Winium.StoreApps.CodedUITestProject.CommandExecutors.Helpers;
     using Winium.StoreApps.Common;
 
+    [UsedImplicitly]
     public class FindElementExecutor : CommandExecutorBase
     {
         protected override string DoImpl()

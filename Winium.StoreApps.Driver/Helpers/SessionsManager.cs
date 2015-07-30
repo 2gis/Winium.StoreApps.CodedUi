@@ -1,16 +1,10 @@
 ﻿namespace Winium.StoreApps.Driver.Helpers
 {
-    #region
-
-    using System.Collections.Generic;
-
-    #endregion
-
     internal static class SessionsManager
     {
         #region Static Fields
 
-        private static readonly Dictionary<string, Session> Sessions;
+        private static Session currentSession;
 
         #endregion
 
@@ -18,8 +12,7 @@
 
         static SessionsManager()
         {
-            Sessions = new Dictionary<string, Session>();
-            Sessions["AwesomeSession"] = new Session("AwesomeSession");
+            currentSession = null;
         }
 
         #endregion
@@ -28,22 +21,33 @@
 
         public static void CloseSession(string sessionId)
         {
-            var session = GetSessionbyId(sessionId);
-            if (null != session)
+            if (currentSession == null)
             {
-                // sessions.Remove(sessionId);
+                return;
             }
+
+            Logger.Info("Closing current session {0}.", sessionId);
+            currentSession.Close();
+            currentSession = null;
         }
 
         public static Session CreateSession()
         {
-            // TODO add support for multiply sessions using different devices or emulators
-            return Sessions["AwesomeSession"];
+            // TODO add support for multiple sessions using different devices or emulators
+            if (currentSession != null)
+            {
+                Logger.Warn("Driver does not support multiple sessions!");
+                CloseSession(currentSession.SessionId);
+            }
+
+            currentSession = new Session("AwesomeSession");
+
+            return currentSession;
         }
 
         public static Session GetSessionbyId(string sessionId)
         {
-            return Sessions["AwesomeSession"];
+            return currentSession;
         }
 
         #endregion

@@ -61,6 +61,7 @@
     <Compile Include="CommandExecutors\Helpers\By.cs" />
     <Compile Include="CommandExecutors\TouchFlickExecutor.cs" />
     <Compile Include="ElementsRegistry.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="SocketServer.cs" />
     <Compile Include="AcceptedRequest.cs" />
     <Compile Include="Automator.cs" />

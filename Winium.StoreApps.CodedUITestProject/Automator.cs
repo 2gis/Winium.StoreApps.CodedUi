@@ -2,6 +2,7 @@
 {
     #region
 
+    using System;
     using System.Net;
     using System.Reflection;
 
@@ -34,7 +35,7 @@
 
         #region Constructors and Destructors
 
-        public Automator()
+        private Automator()
         {
             this.socketServer = new SocketServer(this.RequestHandler);
 
@@ -50,7 +51,15 @@
 
         #region Public Properties
 
-        public string Session { get; set; }
+        private string Session { get; set; }
+
+        public bool Running
+        {
+            get
+            {
+                return this.socketServer.IsServiceActive;
+            } 
+        }
 
         #endregion
 
@@ -73,6 +82,12 @@
         private CommandResponse RequestHandler(string uri, string content)
         {
             var command = JsonConvert.DeserializeObject<Command>(content);
+
+            if (command.Name.Equals(DriverCommand.Quit))
+            {
+                this.socketServer.ShouldStopAfterResponse = true;
+                return CommandResponse.Create(HttpStatusCode.OK, null);
+            }
 
             var executor = this.commandsExecutorsDispatcher.GetExecutor<CommandExecutorBase>(command.Name);
 

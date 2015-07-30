@@ -1,8 +1,10 @@
 ﻿namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 {
+    using Winium.StoreApps.CodedUITestProject.Annotations;
     using Winium.StoreApps.CodedUITestProject.CommandExecutors.Helpers;
     using Winium.StoreApps.Common;
 
+    [UsedImplicitly]
     public class FindChildElementExecutor : CommandExecutorBase
     {
         protected override string DoImpl()

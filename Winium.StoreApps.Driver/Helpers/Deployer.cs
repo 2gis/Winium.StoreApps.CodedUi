@@ -2,9 +2,8 @@
 {
     #region
 
-    using System.Diagnostics;
+    using System;
     using System.Globalization;
-    using System.IO;
     using System.Linq;
 
     using Microsoft.Phone.Tools.Deploy;
@@ -15,43 +14,48 @@
 
     #endregion
 
-    public class Deployer
+    public class Deployer : IDisposable
     {
-        #region Constants
-
-        private const string CodedUiTestDllPath =
-            @"..\..\..\Winium.StoreApps.CodedUITestProject\bin\Debug\Winium.StoreApps.CodedUITestProject.dll";
-
-        #endregion
-
         #region Fields
 
-        private Process codedUiTestProcess;
+        private readonly bool captureCodedUiLogs;
+
+        private ConnectableDevice connectableDevice;
 
         private IDevice device;
 
-        private ConnectableDevice connectableDevice;
+        private bool disposed;
+
+        private VsTestConsoleWrapper testConsole;
 
         #endregion
 
         #region Constructors and Destructors
 
-        public Deployer(string desiredDeviceName, string ipAddress, string localeTag)
+        public Deployer(string desiredDeviceName, string ipAddress, string localeTag, bool captureCodedUiLogs)
         {
             this.IpAddress = ipAddress;
 
             this.Culture = new CultureInfo(localeTag);
 
             this.Connect(desiredDeviceName);
+
+            this.captureCodedUiLogs = captureCodedUiLogs;
         }
 
         #endregion
 
         #region Public Properties
 
-        public CultureInfo Culture { get; private set; }
+        public string IpAddress { get; private set; }
 
-        public string DeviceName
+        #endregion
+
+        #region Properties
+
+        private CultureInfo Culture { get; set; }
+
+        private string DeviceName
         {
             get
             {
@@ -59,40 +63,20 @@
             }
         }
 
-        public string IpAddress { get; private set; }
-
         #endregion
 
         #region Public Methods and Operators
 
-        public void Close()
-        {
-            this.codedUiTestProcess.CloseMainWindow();
-            this.codedUiTestProcess.Close();
-
-            this.device.Disconnect();
-        }
-
         public void DeployCodedUiTestServer()
         {
-            var pathToVsTestconsole = System.Configuration.ConfigurationManager.AppSettings["VsTestConsolePath"];
+            this.testConsole = new VsTestConsoleWrapper(this.DeviceName);
+            this.testConsole.DeployCodedUiTestServer(this.captureCodedUiLogs);
+        }
 
-            var runSettingsDoc = new RunSettings(this.DeviceName);
-            var tempFilePath = Path.GetTempFileName();
-
-            runSettingsDoc.XmlDoc.Save(tempFilePath);
-
-            // TODO We should generate run settings to specify device/emulator
-            var codedUiTestLoopPsi = new ProcessStartInfo
-                                         {
-                                             FileName = pathToVsTestconsole, 
-                                             Arguments =
-                                                 string.Format(
-                                                     "\"{0}\" /Settings:\"{1}\"", 
-                                                     CodedUiTestDllPath, 
-                                                     tempFilePath)
-                                         };
-            this.codedUiTestProcess = Process.Start(codedUiTestLoopPsi);
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public void Install(string appxPath)
@@ -111,6 +95,27 @@
 
         #region Methods
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (this.testConsole != null)
+                {
+                    this.testConsole.Dispose();
+                }
+            }
+
+            // Free any unmanaged objects here. 
+            this.device.Disconnect();
+
+            this.disposed = true;
+        }
+
         private void Connect(string desiredDeviceName)
         {
             var connectivity = new MultiTargetingConnectivity(this.Culture.LCID);
@@ -127,7 +132,7 @@
             this.connectableDevice = matchingDevice;
 
             Logger.Info("Connecting to {0}...", this.DeviceName);
-            
+
             this.device = matchingDevice.Connect();
 
             this.GetIpAddress(matchingDevice.IsEmulator());

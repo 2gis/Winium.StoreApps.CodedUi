@@ -92,7 +92,7 @@
         {
             Interlocked.Increment(ref safeInstanceCount);
 
-            var registeredKey = string.Format(
+            var registeredKey = string.Format(CultureInfo.InvariantCulture,
                 "{0}-{1}", 
                 element.GetHashCode(), 
                 safeInstanceCount.ToString(string.Empty, CultureInfo.InvariantCulture));
@@ -106,7 +106,7 @@
             var sb = new StringBuilder();
             foreach (var pair in this.registeredElements)
             {
-                sb.AppendFormat("{0} -> [{1}]\n", pair.Key, pair.Value);
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0} -> [{1}]\n", pair.Key, pair.Value);
             }
 
             return sb.ToString();

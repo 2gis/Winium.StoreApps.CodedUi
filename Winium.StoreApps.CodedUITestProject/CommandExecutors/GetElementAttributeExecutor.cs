@@ -2,8 +2,10 @@
 {
     using Newtonsoft.Json.Linq;
 
+    using Winium.StoreApps.CodedUITestProject.Annotations;
     using Winium.StoreApps.Common;
 
+    [UsedImplicitly]
     public class GetElementAttributeExecutor : CommandExecutorBase
     {
         protected override string DoImpl()

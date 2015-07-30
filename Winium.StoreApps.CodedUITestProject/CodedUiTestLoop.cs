@@ -19,10 +19,11 @@
         public void CodedUiTestMethod1()
         {
             Automator.Instance.Start();
-            while (true)
+            while (Automator.Instance.Running)
             {
                 Task.Delay(TimeSpan.FromMilliseconds(50)).Wait();
             }
+            Automator.Instance.Stop();
         }
 
         #endregion
