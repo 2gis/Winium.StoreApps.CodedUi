@@ -28,10 +28,6 @@
 
         #region Constructors and Destructors
 
-        public bool IsServiceActive { get; private set; }
-
-        public bool ShouldStopAfterResponse { get; set; }
-
         public SocketServer(Func<string, string, CommandResponse> requestHandlerFunc)
         {
             this.ShouldStopAfterResponse = false;
@@ -46,6 +42,14 @@
 
         #endregion
 
+        #region Public Properties
+
+        public bool IsServiceActive { get; private set; }
+
+        public bool ShouldStopAfterResponse { get; set; }
+
+        #endregion
+
         #region Public Methods and Operators
 
         public async void Start(int port)
@@ -57,11 +61,11 @@
 
             this.listeningPort = port;
 
-            this.IsServiceActive = true;
             this.listener = new StreamSocketListener();
             this.listener.Control.QualityOfService = SocketQualityOfService.Normal;
             this.listener.ConnectionReceived += this.ListenerConnectionReceived;
             await this.listener.BindServiceNameAsync(this.listeningPort.ToString(CultureInfo.InvariantCulture));
+            this.IsServiceActive = true;
         }
 
         public void Stop()

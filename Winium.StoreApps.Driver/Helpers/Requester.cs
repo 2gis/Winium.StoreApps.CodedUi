@@ -7,6 +7,7 @@
     using System.Globalization;
     using System.IO;
     using System.Net;
+    using System.Threading;
 
     using Newtonsoft.Json;
 
@@ -63,6 +64,10 @@
                 if (timeout != 0)
                 {
                     request.Timeout = timeout;
+                }
+                else
+                {
+                    request.Timeout = 5 * 1000;
                 }
 
                 if (verbose)
