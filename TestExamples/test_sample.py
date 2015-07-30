@@ -28,7 +28,7 @@ class TestApp(unittest.TestCase):
         'deviceIpAddress': '127.0.0.1',
         'locale': 'en-US',
         'debugCodedUI': False,
-        'app': r"..\..\..\Winium.StoreApps.TestApp\AppPackages\Winium.StoreApps.TestApp_1.0.0.0_AnyCPU_Debug_Test"
+        'app': r"..\..\Winium.StoreApps.TestApp\AppPackages\Winium.StoreApps.TestApp_1.0.0.0_AnyCPU_Debug_Test"
                r"\Winium.StoreApps.TestApp_1.0.0.0_AnyCPU_Debug.appx"
     }
 
