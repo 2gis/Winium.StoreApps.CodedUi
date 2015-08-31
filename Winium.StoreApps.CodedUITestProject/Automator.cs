@@ -6,6 +6,8 @@
     using System.Net;
     using System.Reflection;
 
+    using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+
     using Newtonsoft.Json;
 
     using Winium.StoreApps.CodedUITestProject.CommandExecutors;
@@ -97,6 +99,8 @@
                     HttpStatusCode.NotImplemented, 
                     string.Format("Command '{0}' not yet implemented.", command.Name));
             }
+
+            Logger.LogMessage("Executing command: {0}", command.Name);
 
             executor.Session = this.Session;
             executor.ExecutedCommand = command;

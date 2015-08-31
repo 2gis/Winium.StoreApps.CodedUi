@@ -1,5 +1,7 @@
 ﻿namespace Winium.StoreApps.Driver.Helpers
 {
+    using System;
+
     using Winium.StoreApps.Common;
 
     internal class Session
@@ -32,9 +34,21 @@
                 return;
             }
 
-            var quitCommand = new Command(DriverCommand.Quit);
-            this.CommandForwarder.ForwardCommand(quitCommand);
-            this.Deployer.Dispose();
+            if (this.CommandForwarder == null)
+            {
+                return;
+            }
+
+            try
+            {
+                var quitCommand = new Command(DriverCommand.Quit);
+                this.CommandForwarder.ForwardCommand(quitCommand);
+                this.Deployer.Dispose();
+            }
+            catch (Exception e)
+            {
+                Logger.Error("Exception occured while trying to close session {0}", e);
+            }
         }
     }
 }
