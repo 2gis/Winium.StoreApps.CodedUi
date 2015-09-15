@@ -50,6 +50,17 @@
         {
             var pathToVsTestconsole = ConfigurationManager.AppSettings["VsTestConsolePath"];
 
+            if (!File.Exists(pathToVsTestconsole))
+            {
+                var message =
+                    string.Format(
+                        "vs.test.console.exe was not found at \"{0}\" specified by VsTestConsolePath ley in driver config file.\n"
+                        + " The path of file depends on Visual Studio version and only available for CodedUI enabled editions.", 
+                        pathToVsTestconsole);
+                Logger.Warn(message);
+                throw new FileNotFoundException("vstest.console.exe was not found.", pathToVsTestconsole);
+            }
+
             var runSettingsDoc = new RunSettings(this.deviceName);
             var tempFilePath = Path.GetTempFileName();
 
