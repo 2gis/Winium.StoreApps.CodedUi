@@ -39,13 +39,14 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CommandExecutors\CloseExecutor.cs" />
+    <Compile Include="CommandExecutors\IsElementDisplayedExecutor.cs" />
     <Compile Include="CommandExecutors\SwitchToWindowExecutor.cs" />
     <Compile Include="CommandExecutors\SendKeysToElementExecutor.cs" />
     <Compile Include="CommandExecutors\FindChildElementExecutor.cs" />
