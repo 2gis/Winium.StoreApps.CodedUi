@@ -35,6 +35,8 @@
                 session.Deployer.DeployCodedUiTestServer();
             }
 
+            session.Deployer.InstallDependencies(session.ActualCapabilities.Dependencies);
+
             if (!string.IsNullOrEmpty(session.ActualCapabilities.App))
             {
                 session.Deployer.Install(session.ActualCapabilities.App);
