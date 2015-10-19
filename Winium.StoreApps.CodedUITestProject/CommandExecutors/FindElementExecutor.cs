@@ -1,5 +1,6 @@
 ﻿namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 {
+    using System;
     using System.Windows.Automation;
 
     using Winium.StoreApps.CodedUITestProject.Annotations;
@@ -14,11 +15,17 @@
             var strategy = this.ExecutedCommand.Parameters["using"].ToObject<string>();
             var value = this.ExecutedCommand.Parameters["value"].ToObject<string>();
 
-            var registredId = this.ElementsRegistry.FindElement(WiniumElement.RootElement, new By(strategy, value));
+            try
+            {
+                var registredId = this.ElementsRegistry.FindElement(WiniumElement.RootElement, new By(strategy, value));
+                var webElement = new JsonWebElementContent(registredId);
 
-            var webElement = new JsonWebElementContent(registredId);
+                return this.JsonResponse(ResponseStatus.Success, webElement);
+            }
+            catch (Exception e){
+                return this.JsonResponse(ResponseStatus.NoSuchElement, "Couldn't find element : " + value);
+            }
 
-            return this.JsonResponse(ResponseStatus.Success, webElement);
         }
     }
 }
