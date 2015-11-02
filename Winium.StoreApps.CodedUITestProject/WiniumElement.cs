@@ -154,6 +154,7 @@
 
         public void SendKeys(string value)
         {
+            this.element.SetFocus();
             object patternObj;
             if (!this.element.TryGetCurrentPattern(ValuePattern.Pattern, out patternObj))
             {
