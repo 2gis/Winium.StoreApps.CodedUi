@@ -22,7 +22,7 @@
 
                 return this.JsonResponse(ResponseStatus.Success, webElement);
             }
-            catch (Exception e){
+            catch (AutomationException e){
                 return this.JsonResponse(ResponseStatus.NoSuchElement, "Couldn't find element : " + value);
             }
 
