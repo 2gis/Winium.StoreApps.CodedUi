@@ -91,7 +91,9 @@
         public void InstallDependencies(List<string> appPaths)
         {
             foreach (string appxPaxkage in appPaths)
-            InstallApplicationPackage(appxPaxkage);
+            {
+                InstallApplicationPackage(appxPaxkage);
+            }
         }
 
         private void InstallApplicationPackage(string appxPath)
