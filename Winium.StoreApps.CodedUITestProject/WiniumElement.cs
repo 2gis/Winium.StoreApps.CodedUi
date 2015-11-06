@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Windows.Automation;
     using System.Xml.Linq;
+    using System.Reflection;
 
     using Microsoft.VisualStudio.TestTools.UITest.Input;
     using Microsoft.VisualStudio.TestTools.UITesting;
@@ -80,8 +81,10 @@
 
         public string GetAttribute(string attributeName)
         {
-            // TODO Add actual support for different attributes
-            return this.element.Current.AutomationId;
+            PropertyInfo property = this.AutomationElement.Current.GetType().GetRuntimeProperty(attributeName);
+            object value = property.GetValue(this.AutomationElement.Current);
+
+            return value.ToString();
         }
 
         public Point GetClickablePoint()
@@ -151,6 +154,7 @@
 
         public void SendKeys(string value)
         {
+            this.element.SetFocus();
             object patternObj;
             if (!this.element.TryGetCurrentPattern(ValuePattern.Pattern, out patternObj))
             {

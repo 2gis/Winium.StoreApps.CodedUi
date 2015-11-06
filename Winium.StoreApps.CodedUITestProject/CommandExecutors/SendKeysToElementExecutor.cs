@@ -6,6 +6,8 @@
 
     using Winium.StoreApps.CodedUITestProject.Annotations;
     using Winium.StoreApps.Common;
+    using Microsoft.VisualStudio.TestTools.UITesting;
+    using Microsoft.VisualStudio.TestTools.UITest.Input;
 
     #endregion
 
@@ -24,6 +26,7 @@
 
             element.SendKeys(value);
 
+            Gesture.Tap(new Point(0,0));
             return this.JsonResponse(ResponseStatus.Success, null);
         }
 

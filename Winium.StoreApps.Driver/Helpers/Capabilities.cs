@@ -6,6 +6,7 @@
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
+    using System.Collections.Generic;
 
     #endregion
 
@@ -22,6 +23,7 @@
             this.DebugCodedUi = false;
             this.Locale = CultureInfo.CurrentCulture.Name;
             this.DebugCaptureLogs = false;
+            this.Dependencies = new List<string>();
         }
 
         #endregion
@@ -57,6 +59,9 @@
 
         [JsonProperty("debugCaptureLogs")]
         public bool DebugCaptureLogs { get; private set; }
+
+        [JsonProperty("dependencies")]
+        public List<string> Dependencies { get; set; }
 
         #endregion
 

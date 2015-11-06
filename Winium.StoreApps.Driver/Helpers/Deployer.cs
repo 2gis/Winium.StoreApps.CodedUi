@@ -5,6 +5,7 @@
     using System;
     using System.Globalization;
     using System.Linq;
+    using System.Collections.Generic;
 
     using Microsoft.Phone.Tools.Deploy;
     using Microsoft.SmartDevice.Connectivity.Interface;
@@ -81,14 +82,27 @@
 
         public void Install(string appxPath)
         {
+            GlobalOptions.LaunchAfterInstall = true;
+            InstallApplicationPackage(appxPath);
+
+            Logger.Info("Successfully deployed using Microsoft.Phone.Tools.Deploy");
+        }
+
+        public void InstallDependencies(List<string> appPaths)
+        {
+            foreach (string appxPaxkage in appPaths)
+            {
+                InstallApplicationPackage(appxPaxkage);
+            }
+        }
+
+        private void InstallApplicationPackage(string appxPath)
+        {
             var appManifestInfo = Utils.ReadAppManifestInfoFromPackage(appxPath);
             var devices = Utils.GetDevices();
             var deviceInfo = devices.First(x => x.ToString().Equals(this.DeviceName));
 
-            GlobalOptions.LaunchAfterInstall = true;
             Utils.InstallApplication(deviceInfo, appManifestInfo, DeploymentOptions.None, appxPath);
-
-            Logger.Info("Successfully deployed using Microsoft.Phone.Tools.Deploy");
         }
 
         #endregion
