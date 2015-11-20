@@ -22,7 +22,7 @@
 
         private Devices()
         {
-            this.AvailableDevices = Utils.GetDevices().Where(x => !x.ToString().Equals("Device")).ToList();
+            this.AvailableDevices = Utils.GetDevices().ToList();
         }
 
         #endregion

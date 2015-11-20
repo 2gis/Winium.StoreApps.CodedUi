@@ -47,6 +47,7 @@
 
             this.commandsExecutorsDispatcher =
                 new ExecutorsDispatcher(typeof(CommandExecutorBase).GetTypeInfo().Assembly, typeof(CommandExecutorBase));
+            this.commandsExecutorsDispatcher.AddExecutor("ping", typeof(PingExecutor));
         }
 
         #endregion

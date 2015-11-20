@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -33,30 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Phone.Tools.Deploy">
-      <HintPath>C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v8.1\Tools\AppDeploy\Microsoft.Phone.Tools.Deploy.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.SmartDevice.Connectivity.Interface, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Smartdevice.MultiTargeting.Connectivity, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.SmartDevice.MultiTargeting.Connectivity\v4.0_12.0.0.0__b03f5f7f11d50a3a\Microsoft.Smartdevice.MultiTargeting.Connectivity.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.7.0.1-beta2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -70,8 +56,7 @@
     <Compile Include="CommandExecutors\CommandExecutorBase.cs" />
     <Compile Include="Listener\HttpRequest.cs" />
     <Compile Include="Listener\JWPListener.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="Helpers\Deployer.cs" />
+    <Compile Include="Helpers\DeviceBridge.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\Requester.cs" />
@@ -85,9 +70,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Winium.Mobile.Connectivity\Winium.Mobile.Connectivity.csproj">
+      <Project>{DA38085E-F3DB-46EF-8889-D89283924917}</Project>
+      <Name>Winium.Mobile.Connectivity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Winium.StoreApps.Common\Winium.StoreApps.Common.csproj">
       <Project>{e37d13da-dafa-4019-aed9-1feb8b8ebf0b}</Project>
       <Name>Winium.StoreApps.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Winium.StoreApps.Logging\Winium.StoreApps.Logging.csproj">
+      <Project>{dac0eafe-2fe0-4f33-b173-736c1bafd707}</Project>
+      <Name>Winium.StoreApps.Logging</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +90,13 @@
   <PropertyGroup>
     <PreBuildEvent>git rev-parse HEAD &gt; "$(ProjectDir)\version.txt" || (echo version.txt:warning:  Could not write git revision for version.txt: GIT not found in PATH. Add git.exe to PATH &amp;&amp; exit 0)</PreBuildEvent>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -22,6 +22,7 @@
             this.DebugCodedUi = false;
             this.Locale = CultureInfo.CurrentCulture.Name;
             this.DebugCaptureLogs = false;
+            this.PingRetries = 10;
         }
 
         #endregion
@@ -40,11 +41,17 @@
         [JsonProperty("app")]
         public string App { get; private set; }
 
-        [JsonProperty("deviceName")]
-        public string DeviceName { get; private set; }
+        [JsonProperty("debugCaptureLogs")]
+        public bool DebugCaptureLogs { get; private set; }
+
+        [JsonProperty("debugCodedUI")]
+        public bool DebugCodedUi { get; private set; }
 
         [JsonProperty("deviceIpAddress")]
         public string DeviceIpAddress { get; private set; }
+
+        [JsonProperty("deviceName")]
+        public string DeviceName { get; private set; }
 
         [JsonProperty("innerPort")]
         public int InnerPort { get; private set; }
@@ -52,11 +59,8 @@
         [JsonProperty("locale")]
         public string Locale { get; private set; }
 
-        [JsonProperty("debugCodedUI")]
-        public bool DebugCodedUi { get; private set; }
-
-        [JsonProperty("debugCaptureLogs")]
-        public bool DebugCaptureLogs { get; private set; }
+        [JsonProperty("pingTimeout")]
+        public int PingRetries { get; set; }
 
         #endregion
 
@@ -65,15 +69,15 @@
         public static Capabilities CapabilitiesFromJsonString(string jsonString)
         {
             var capabilities = JsonConvert.DeserializeObject<Capabilities>(
-                jsonString,
+                jsonString, 
                 new JsonSerializerSettings
-                {
-                    Error =
-                        delegate(object sender, ErrorEventArgs args)
-                        {
-                            args.ErrorContext.Handled = true;
-                        }
-                });
+                    {
+                        Error =
+                            delegate(object sender, ErrorEventArgs args)
+                                {
+                                    args.ErrorContext.Handled = true;
+                                }
+                    });
 
             return capabilities;
         }

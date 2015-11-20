@@ -1,4 +1,7 @@
 ﻿// Library needed to connect to the Windows Phone X Emulator
+
+using Winium.StoreApps.Common;
+
 namespace Winium.Mobile.Connectivity
 {
     #region
@@ -14,7 +17,6 @@ namespace Winium.Mobile.Connectivity
     using Microsoft.SmartDevice.Connectivity.Interface;
     using Microsoft.SmartDevice.MultiTargeting.Connectivity;
 
-    using Winium.StoreApps.Common.Exceptions;
     using Winium.StoreApps.Logging;
 
     using DeviceInfo = Microsoft.Phone.Tools.Deploy.Patched.DeviceInfo;
@@ -44,8 +46,13 @@ namespace Winium.Mobile.Connectivity
 
         #region Constructors and Destructors
 
-        public Deployer(string desiredDevice, bool strict)
+        public Deployer(string desiredDevice, bool strict, CultureInfo cultureInfo)
         {
+            if (cultureInfo == null)
+            {
+                cultureInfo = CultureInfo.CurrentUICulture;
+            }
+
             this.deviceInfo = Devices.Instance.GetMatchingDevice(desiredDevice, strict);
 
             if (this.deviceInfo == null)
@@ -60,9 +67,10 @@ namespace Winium.Mobile.Connectivity
             var propertyInfo = this.deviceInfo.GetType().GetTypeInfo().GetDeclaredProperty("DeviceId");
             var deviceId = (string)propertyInfo.GetValue(this.deviceInfo);
             var connectableDevice =
-                new MultiTargetingConnectivity(CultureInfo.CurrentUICulture.LCID).GetConnectableDevice(deviceId);
+                new MultiTargetingConnectivity(cultureInfo.LCID).GetConnectableDevice(deviceId);
+            this.IsEmulator = connectableDevice.IsEmulator();
             this.Device = connectableDevice.Connect(true);
-            Logger.Info("Target emulator: '{0}'", this.DeviceName);
+            Logger.Info("Target device: '{0}'", this.DeviceName);
         }
 
         #endregion
@@ -76,6 +84,8 @@ namespace Winium.Mobile.Connectivity
                 return this.deviceInfo.ToString();
             }
         }
+
+        public bool IsEmulator { get; private set; }
 
         #endregion
 
@@ -151,6 +161,11 @@ namespace Winium.Mobile.Connectivity
             this.RemoteApplication = null;
 
             this.Device.Disconnect();
+        }
+
+        public void GetEndPoints(int servicePort, out string sourceIp, out string destinationIp, out int destinationPort)
+        {
+            this.Device.GetEndPoints(servicePort, out sourceIp, out destinationIp, out destinationPort);
         }
 
         #endregion

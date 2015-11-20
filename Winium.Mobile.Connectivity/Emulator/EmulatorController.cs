@@ -16,7 +16,6 @@
 
     using Winium.Mobile.Connectivity.Gestures;
     using Winium.StoreApps.Common;
-    using Winium.StoreApps.Common.Exceptions;
 
     #endregion
 

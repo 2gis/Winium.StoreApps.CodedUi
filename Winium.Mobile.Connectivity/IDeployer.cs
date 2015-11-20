@@ -12,6 +12,8 @@ namespace Winium.Mobile.Connectivity
 
         string DeviceName { get; }
 
+        bool IsEmulator { get; }
+
         #endregion
 
         #region Public Methods and Operators
@@ -29,6 +31,8 @@ namespace Winium.Mobile.Connectivity
         void Terminate();
 
         void Uninstall();
+
+        void GetEndPoints(int servicePort, out string sourceIp, out string destinationIp, out int destinationPort);
 
         #endregion
     }

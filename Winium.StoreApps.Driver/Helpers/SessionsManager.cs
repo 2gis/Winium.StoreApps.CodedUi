@@ -1,5 +1,7 @@
 ﻿namespace Winium.StoreApps.Driver.Helpers
 {
+    using Winium.StoreApps.Logging;
+
     internal static class SessionsManager
     {
         #region Static Fields

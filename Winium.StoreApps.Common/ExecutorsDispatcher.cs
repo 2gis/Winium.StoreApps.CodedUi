@@ -42,9 +42,14 @@
                 Type executorType;
                 if (executorTypesMap.TryGetValue(localField.Name + postfix, out executorType))
                 {
-                    this.executorsDespatchTable.Add(localField.GetValue(null).ToString(), executorType);
+                    this.AddExecutor(localField.GetValue(null).ToString(), executorType);
                 }
             }
+        }
+
+        public void AddExecutor(string commandName, Type executorType)
+        {
+            this.executorsDespatchTable.Add(commandName, executorType);
         }
 
         #endregion

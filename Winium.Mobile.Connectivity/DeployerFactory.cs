@@ -2,6 +2,7 @@
 {
     #region
 
+    using System.Globalization;
     using System.IO;
 
     #endregion
@@ -10,9 +11,9 @@
     {
         #region Public Methods and Operators
 
-        public static IDeployer DeployerForPackage(FileInfo package, string desiredDevice, bool strict)
+        public static IDeployer DeployerForPackage(FileInfo package, string desiredDevice, bool strict, CultureInfo cultureInfo = null)
         {
-            return new Deployer(desiredDevice, strict);
+            return new Deployer(desiredDevice, strict, cultureInfo);
         }
 
         #endregion

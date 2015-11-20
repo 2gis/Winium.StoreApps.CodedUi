@@ -10,6 +10,8 @@
     using System.IO;
     using System.Reflection;
 
+    using Winium.StoreApps.Logging;
+
     #endregion
 
     internal class VsTestConsoleWrapper : IDisposable

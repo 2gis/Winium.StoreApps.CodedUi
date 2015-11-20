@@ -3,6 +3,7 @@
     using System;
 
     using Winium.StoreApps.Common;
+    using Winium.StoreApps.Logging;
 
     internal class Session
     {
@@ -21,7 +22,7 @@
 
         public Requester CommandForwarder { get; set; }
 
-        public Deployer Deployer { get; set; }
+        public DeviceBridge DeviceBridge { get; set; }
 
         public string SessionId { get; private set; }
 
@@ -43,7 +44,7 @@
             {
                 var quitCommand = new Command(DriverCommand.Quit);
                 this.CommandForwarder.ForwardCommand(quitCommand);
-                this.Deployer.Dispose();
+                this.DeviceBridge.Dispose();
             }
             catch (Exception e)
             {
