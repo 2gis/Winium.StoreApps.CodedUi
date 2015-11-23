@@ -5,6 +5,7 @@
     using System;
 
     using Winium.StoreApps.Driver.Listener;
+    using Winium.StoreApps.Logging;
 
     #endregion
 

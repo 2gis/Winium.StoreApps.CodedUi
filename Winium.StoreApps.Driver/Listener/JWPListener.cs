@@ -10,6 +10,7 @@
 
     using Winium.StoreApps.Common;
     using Winium.StoreApps.Driver.CommandExecutors;
+    using Winium.StoreApps.Logging;
 
     #endregion
 

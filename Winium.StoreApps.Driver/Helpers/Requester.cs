@@ -12,6 +12,7 @@
     using Newtonsoft.Json;
 
     using Winium.StoreApps.Common;
+    using Winium.StoreApps.Logging;
 
     #endregion
 
@@ -60,16 +61,9 @@
             {
                 // create the request
                 var uri = string.Format(CultureInfo.InvariantCulture, "http://{0}:{1}", this.ip, this.port);
-                var request = CreateWebRequest(uri, requestContent);
-                if (timeout != 0)
-                {
-                    request.Timeout = timeout;
-                }
-                else
-                {
-                    request.Timeout = 5 * 1000;
-                }
 
+                var request = CreateWebRequest(uri, requestContent, timeout);
+                
                 if (verbose)
                 {
                     Logger.Debug("Sending request to inner driver: {0}", uri);
@@ -127,13 +121,17 @@
 
         #region Methods
 
-        private static HttpWebRequest CreateWebRequest(string uri, string content)
+        private static HttpWebRequest CreateWebRequest(string uri, string content, int timeout)
         {
             // create request
             var request = (HttpWebRequest)WebRequest.Create(uri);
             request.ContentType = "application/json";
             request.Method = "POST";
             request.KeepAlive = false;
+            if (timeout != 0)
+            {
+                request.Timeout = timeout;
+            }
 
             // write request body
             if (!string.IsNullOrEmpty(content))

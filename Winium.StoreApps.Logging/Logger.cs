@@ -1,4 +1,4 @@
-﻿namespace Winium.StoreApps.Driver
+﻿namespace Winium.StoreApps.Logging
 {
     #region
 
@@ -9,17 +9,17 @@
 
     #endregion
 
-    internal static class Logger
+    public static class Logger
     {
         #region Constants
 
-        private const string LayoutFormat = "${date:format=HH\\:MM\\:ss} [${level:uppercase=true}] ${message}";
+        private const string LayoutFormat = "${date:format=HH\\:mm\\:ss} [${level:uppercase=true}] ${message}";
 
         #endregion
 
         #region Static Fields
 
-        private static readonly NLog.Logger Log = LogManager.GetLogger(typeof(Logger).Namespace);
+        private static readonly NLog.Logger Log = LogManager.GetLogger("outerdriver");
 
         #endregion
 
