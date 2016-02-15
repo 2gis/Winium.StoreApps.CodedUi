@@ -51,9 +51,9 @@
             var registredId = this.ExecutedCommand.Parameters["element"].ToObject<string>();
             var element = this.ElementsRegistry.GetRegistredElement(registredId);
 
-            var xOffset = Convert.ToInt32(this.ExecutedCommand.Parameters["xoffset"], CultureInfo.InvariantCulture);
-            var yOffset = Convert.ToInt32(this.ExecutedCommand.Parameters["yoffset"], CultureInfo.InvariantCulture);
-            var speed = Convert.ToDouble(this.ExecutedCommand.Parameters["speed"], CultureInfo.InvariantCulture);
+            var xOffset = Convert.ToInt32(this.ExecutedCommand.Parameters["xoffset"].ToObject<string>(), CultureInfo.InvariantCulture);
+            var yOffset = Convert.ToInt32(this.ExecutedCommand.Parameters["yoffset"].ToObject<string>(), CultureInfo.InvariantCulture);
+            var speed = Convert.ToDouble(this.ExecutedCommand.Parameters["speed"].ToObject<string>(), CultureInfo.InvariantCulture);
 
             flickParameters.StartPoint = element.AutomationElement.GetClickablePoint();
             flickParameters.Length = (uint)Math.Sqrt((xOffset * xOffset) + (yOffset * yOffset));
