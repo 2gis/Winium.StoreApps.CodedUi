@@ -30,7 +30,7 @@
             else
             {
                 throw new AutomationException(
-                    "Flick without start point is not supported. Please provide lement to flick form.");
+                    "Flick without start point is not supported. Please provide element to flick from.");
             }
 
             Logger.LogMessage("Flick with: {0}", flickParameters.ToString());
