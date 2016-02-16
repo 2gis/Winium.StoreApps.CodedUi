@@ -45,6 +45,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CommandExecutors\TouchPinchExecutor.cs" />
     <Compile Include="CommandExecutors\TouchScrollExecutor.cs" />
     <Compile Include="CommandExecutors\TouchLongPressExecutor.cs" />
     <Compile Include="CommandExecutors\TouchSingleTapExecutor.cs" />
