@@ -84,6 +84,11 @@
             Gesture.DoubleTap(this.GetClickablePoint());
         }
 
+        public void LongPress()
+        {
+            Gesture.PressAndHold(this.GetClickablePoint());
+        }
+
         public string GetAttribute(string attributeName)
         {
             PropertyInfo property = this.AutomationElement.Current.GetType().GetRuntimeProperty(attributeName);
