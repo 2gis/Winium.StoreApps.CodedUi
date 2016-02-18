@@ -1,6 +1,4 @@
-﻿using Windows.Foundation.Collections;
-
-namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
+﻿namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 {
     #region
 
@@ -28,7 +26,7 @@ namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
             var xOffset = Convert.ToInt32(this.ExecutedCommand.Parameters["xoffset"].ToObject<string>(), CultureInfo.InvariantCulture);
             var yOffset = Convert.ToInt32(this.ExecutedCommand.Parameters["yoffset"].ToObject<string>(), CultureInfo.InvariantCulture);
             var start = element.GetClickablePoint();
-            var end = start + new Vector(xOffset, yOffset);
+            var end = new Point(start.X + xOffset, start.Y + yOffset);
 
             Gesture.Slide(start, end);
 
