@@ -45,6 +45,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CommandExecutors\TouchTurnExecutor.cs" />
+    <Compile Include="CommandExecutors\TouchStretchExecutor.cs" />
+    <Compile Include="CommandExecutors\TouchPinchExecutor.cs" />
+    <Compile Include="CommandExecutors\TouchScrollExecutor.cs" />
+    <Compile Include="CommandExecutors\TouchLongPressExecutor.cs" />
+    <Compile Include="CommandExecutors\TouchSingleTapExecutor.cs" />
+    <Compile Include="CommandExecutors\TouchDoubleTapExecutor.cs" />
     <Compile Include="CommandExecutors\CloseExecutor.cs" />
     <Compile Include="CommandExecutors\IsElementDisplayedExecutor.cs" />
     <Compile Include="CommandExecutors\SwitchToWindowExecutor.cs" />
