@@ -182,7 +182,13 @@ namespace Winium.StoreApps.Driver.Helpers
         #endregion
 
         // public void Launch() { }
-        // public void ReciveFiles(Dictionary<string, string> files) { }
+        public void ReceiveFile(string isoStoreRoot, string sourceDeviceFilePath, string targetDesktopFilePath)
+        {
+            var app = this.device.GetApplication(this.productId);
+            var store = app.GetIsolatedStore(isoStoreRoot);
+            store.ReceiveFile(sourceDeviceFilePath, targetDesktopFilePath, true);
+        }
+
         public void SendFiles(Dictionary<string, string> files)
         {
             if (files == null || !files.Any())
