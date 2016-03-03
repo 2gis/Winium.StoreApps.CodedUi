@@ -42,6 +42,9 @@
         [JsonProperty("app")]
         public string App { get; private set; }
 
+        [JsonProperty("files")]
+        public Dictionary<string, string> Files { get; set; }
+
         [JsonProperty("deviceName")]
         public string DeviceName { get; private set; }
 
