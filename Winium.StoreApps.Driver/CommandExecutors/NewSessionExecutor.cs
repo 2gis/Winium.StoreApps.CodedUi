@@ -40,6 +40,8 @@
             if (!string.IsNullOrEmpty(session.ActualCapabilities.App))
             {
                 session.Deployer.Install(session.ActualCapabilities.App);
+                session.Deployer.SendFiles(session.ActualCapabilities.Files);
+                session.Deployer.LaunchApplication();
             }
 
             session.CommandForwarder = new Requester(session.Deployer.IpAddress, session.ActualCapabilities.InnerPort);

@@ -1,4 +1,6 @@
-﻿namespace Winium.StoreApps.Driver.Helpers
+﻿using System.IO;
+
+namespace Winium.StoreApps.Driver.Helpers
 {
     #region
 
@@ -24,6 +26,8 @@
         private ConnectableDevice connectableDevice;
 
         private IDevice device;
+
+        private Guid productId;
 
         private bool disposed;
 
@@ -82,7 +86,9 @@
 
         public void Install(string appxPath)
         {
-            GlobalOptions.LaunchAfterInstall = true;
+            GlobalOptions.LaunchAfterInstall = false;
+            var appManifestInfo = Utils.ReadAppManifestInfoFromPackage(appxPath);
+            this.productId = appManifestInfo.ProductId;
             InstallApplicationPackage(appxPath);
 
             Logger.Info("Successfully deployed using Microsoft.Phone.Tools.Deploy");
@@ -103,6 +109,12 @@
             var deviceInfo = devices.First(x => x.ToString().Equals(this.DeviceName));
 
             Utils.InstallApplication(deviceInfo, appManifestInfo, DeploymentOptions.None, appxPath);
+        }
+
+        public void LaunchApplication()
+        {
+            var app = this.device.GetApplication(this.productId);
+            app.Launch();
         }
 
         #endregion
@@ -171,7 +183,25 @@
 
         // public void Launch() { }
         // public void ReciveFiles(Dictionary<string, string> files) { }
-        // public void SendFiles(Dictionary<string, string> files) { }
+        public void SendFiles(Dictionary<string, string> files)
+        {
+            if (files == null || !files.Any())
+            {
+                return;
+            }
+            var app = this.device.GetApplication(this.productId);
+            var store = app.GetIsolatedStore("Local");
+            foreach (var file in files)
+            {
+                var phoneDirectoryName = Path.GetDirectoryName(file.Value);
+                var phoneFileName = Path.GetFileName(file.Value);
+                if (string.IsNullOrEmpty(phoneFileName))
+                {
+                    phoneFileName = Path.GetFileName(file.Key);
+                }
+                store.SendFile(file.Key, Path.Combine(phoneDirectoryName, phoneFileName), true);
+            }
+        }
         // public void Terminate() { }
         // public void Uninstall() { }
     }
