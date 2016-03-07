@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandExecutors\QuitExecutor.cs" />
+    <Compile Include="CommandExecutors\ExecuteScriptExecutor.cs" />
     <Compile Include="CommandExecutors\StatusExecutor.cs" />
     <Compile Include="Helpers\VsTestConsoleWrapper.cs" />
     <Compile Include="Helpers\BuildInfo.cs" />
