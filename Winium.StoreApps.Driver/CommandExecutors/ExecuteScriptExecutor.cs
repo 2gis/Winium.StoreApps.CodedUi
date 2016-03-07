@@ -15,13 +15,14 @@ namespace Winium.StoreApps.Driver.CommandExecutors
 
     internal class ExecuteScriptExecutor : CommandExecutorBase
     {
-        #region Methods
+        private const string StorageReadLocalFile = "ReadLocalTextFile";
 
+        #region Methods
         internal object ExecuteStorageScript(string command)
         {
             switch (command)
             {
-                case "ReadLocalTextFile":
+                case StorageReadLocalFile:
                     var args = ExecutedCommand.Parameters["args"] as JArray;
                     if (args == null || args.Count == 0)
                     {
