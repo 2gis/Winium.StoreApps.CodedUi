@@ -46,6 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CommandExecutors\GetElementLocationExecutor.cs" />
+    <Compile Include="CommandExecutors\GetElementSizeExecutor.cs" />
     <Compile Include="CommandExecutors\TouchTurnExecutor.cs" />
     <Compile Include="CommandExecutors\TouchStretchExecutor.cs" />
     <Compile Include="CommandExecutors\TouchPinchExecutor.cs" />
