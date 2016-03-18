@@ -1,4 +1,6 @@
-﻿namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
+﻿using Microsoft.VisualStudio.TestTools.UITest.Input;
+
+namespace Winium.StoreApps.CodedUITestProject.CommandExecutors
 {
     #region
 
@@ -22,6 +24,9 @@
         public Command ExecutedCommand { get; set; }
 
         public string Session { get; set; }
+
+        public MousePosition MousePosition { get; set; }
+    
 
         #endregion
 
