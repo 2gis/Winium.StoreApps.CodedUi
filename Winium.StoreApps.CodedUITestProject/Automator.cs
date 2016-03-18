@@ -1,4 +1,6 @@
-﻿namespace Winium.StoreApps.CodedUITestProject
+﻿using Microsoft.VisualStudio.TestTools.UITest.Input;
+
+namespace Winium.StoreApps.CodedUITestProject
 {
     #region
 
@@ -33,6 +35,8 @@
 
         private readonly WindowsRegistry windowsesRegistry;
 
+        private readonly MousePosition mousePosition;
+
         #endregion
 
         #region Constructors and Destructors
@@ -44,6 +48,7 @@
             this.elementsRegistry = new ElementsRegistry();
             this.windowsesRegistry = new WindowsRegistry();
             this.Session = "AwesomeSession";
+            this.mousePosition = new MousePosition();
 
             this.commandsExecutorsDispatcher =
                 new ExecutorsDispatcher(typeof(CommandExecutorBase).GetTypeInfo().Assembly, typeof(CommandExecutorBase));
@@ -106,6 +111,7 @@
             executor.ExecutedCommand = command;
             executor.ElementsRegistry = this.elementsRegistry;
             executor.WindowsRegistry = this.windowsesRegistry;
+            executor.MousePosition = this.mousePosition;
             return executor.Do();
         }
 
