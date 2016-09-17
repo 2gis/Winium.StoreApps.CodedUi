@@ -33,7 +33,7 @@ There are two parts: Winium.StoreApps.Driver and Winium.StoreApps.CodedUITestPro
 4. Run `Winium.StoreApps.Driver`
 5. Run tests (solution comes with [samples](TestExamples/test_sample.py))
  
-*Note:* to run on devices you will need to setup your system as described in https://github.com/2gis/Winium.StoreApps.CodedUi/issues/1#issuecomment-94719621 and use 
+*Note:* to run on devices you will need to setup your system as described in https://github.com/2gis/Winium.StoreApps.CodedUi/issues/1#issuecomment-94719621 and use `deviceIpAddress` capability set to `localhost`.
 
 We already support some basic commands:
 - NewSession
