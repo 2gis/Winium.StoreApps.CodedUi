@@ -18,12 +18,22 @@
         [TestMethod]
         public void CodedUiTestMethod1()
         {
-            Automator.Instance.Start();
-            while (Automator.Instance.Running)
+            try
             {
-                Task.Delay(TimeSpan.FromMilliseconds(50)).Wait();
+                Logger.LogMessage("Starting automation server");
+                Automator.Instance.Start();
+                while (Automator.Instance.Running)
+                {
+                    Task.Delay(TimeSpan.FromMilliseconds(50)).Wait();
+                }
+                Logger.LogMessage("Stopping automation server");
+                Automator.Instance.Stop();
             }
-            Automator.Instance.Stop();
+            catch (Exception ex)
+            {
+                Logger.LogMessage("Unhandled exception: {0}", ex.ToString());
+                throw;
+            }
         }
 
         #endregion

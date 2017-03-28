@@ -40,7 +40,6 @@
         private Automator()
         {
             this.socketServer = new SocketServer(this.RequestHandler);
-
             this.elementsRegistry = new ElementsRegistry();
             this.windowsesRegistry = new WindowsRegistry();
             this.Session = "AwesomeSession";
@@ -84,30 +83,38 @@
 
         private CommandResponse RequestHandler(string uri, string content)
         {
-            var command = JsonConvert.DeserializeObject<Command>(content);
-
-            if (command.Name.Equals(DriverCommand.Quit))
+            try
             {
-                this.socketServer.ShouldStopAfterResponse = true;
-                return CommandResponse.Create(HttpStatusCode.OK, null);
+                var command = JsonConvert.DeserializeObject<Command>(content);
+
+                if (command.Name.Equals(DriverCommand.Quit))
+                {
+                    this.socketServer.ShouldStopAfterResponse = true;
+                    return CommandResponse.Create(HttpStatusCode.OK, null);
+                }
+
+                var executor = this.commandsExecutorsDispatcher.GetExecutor<CommandExecutorBase>(command.Name);
+
+                if (executor == null)
+                {
+                    return CommandResponse.Create(
+                        HttpStatusCode.NotImplemented,
+                        string.Format("Command '{0}' not yet implemented.", command.Name));
+                }
+
+                Logger.LogMessage("Executing command: {0}", command.Name);
+
+                executor.Session = this.Session;
+                executor.ExecutedCommand = command;
+                executor.ElementsRegistry = this.elementsRegistry;
+                executor.WindowsRegistry = this.windowsesRegistry;
+                return executor.Do();
             }
-
-            var executor = this.commandsExecutorsDispatcher.GetExecutor<CommandExecutorBase>(command.Name);
-
-            if (executor == null)
+            catch (Exception exception)
             {
-                return CommandResponse.Create(
-                    HttpStatusCode.NotImplemented, 
-                    string.Format("Command '{0}' not yet implemented.", command.Name));
+                Logger.LogMessage("Unhandled exception in request handler: {0}", exception.ToString());
+                throw;
             }
-
-            Logger.LogMessage("Executing command: {0}", command.Name);
-
-            executor.Session = this.Session;
-            executor.ExecutedCommand = command;
-            executor.ElementsRegistry = this.elementsRegistry;
-            executor.WindowsRegistry = this.windowsesRegistry;
-            return executor.Do();
         }
 
         #endregion
